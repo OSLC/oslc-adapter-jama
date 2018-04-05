@@ -1,0 +1,145 @@
+/*********************************************************************************************
+ * Copyright (c) 2014 Model-Based Systems Engineering Center, Georgia Institute of Technology.
+ *                         http://www.mbse.gatech.edu/
+ *                  http://www.mbsec.gatech.edu/research/oslc
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  and Eclipse Distribution License v. 1.0 which accompanies this distribution.
+ *
+ *  The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+ *  and the Eclipse Distribution License is available at
+ *  http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ *  Contributors:
+ *
+ *	   Axel Reichwein, Koneksys (axel.reichwein@koneksys.com)		
+ *******************************************************************************************/
+
+
+html {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    padding-bottom: 2em;
+    min-height: 100%;
+    font-family: 'Open Sans', Arial, sans-serif;
+    line-height: 1.5em;
+    text-indent: 25px;   
+    background-color: white ; 
+}
+
+#title {
+        border-radius: 10px;
+        background-color: #002447;
+        color: white;
+        padding: 1em;
+        text-indent:25px;
+        margin-left: 25px; 
+        margin-right: 25px;
+        font-size: 0.8em;
+        font-weight: bold;
+}
+
+#oslclogo {
+        float: left;
+        margin-top: 8px;
+}
+
+#adapter-details {		     
+        margin-left: 120px;        
+        font-size: 0.8em;
+        text-indent: 0;    
+}
+
+#main-body {
+		border-left: 2px solid #747E93;
+        border-right: 2px solid #747E93;
+        border-bottom: 2px solid #747E93;
+        border-top: 2px solid #747E93;
+        border-radius: 10px;
+        background-color: white;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        text-indent:25px;
+        margin-left: 25px; 
+        margin-right: 25px;
+}
+
+#metainfo{
+	color: #3D003D;
+	font-weight: bold;
+}
+
+
+
+a {
+  	text-decoration: inherit;
+}
+
+a, a:visited {
+    color: #0645AD;
+}
+
+a:hover {
+    text-decoration:underline;
+}
+
+#footer {
+        border-radius: 10px;
+        background-color: #4D667E;
+        color: 	#CCCCCC;
+        padding: 1em;
+        text-indent:25px;
+        margin-left: 25px; 
+        margin-right: 25px;
+        margin-top: 10px;
+        font-size: 0.8em;
+        
+}
+
+a.nofancyfooter, a.nofancyfooter:visited, a.nofancyfooter:hover{
+    color: #CCCCCC;
+    text-decoration: inherit;
+}
+
+a.nofancylink, a.nofancylink:visited, a.nofancylink:hover{
+    color: #CCCCCC;
+    text-decoration: inherit;
+}
+
+p.word-break {
+	word-break:break-all;
+}
+
+/* 
+This query will take effect for any screen smaller than 760px
+*/
+@media 
+only screen and (max-width: 760px) {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+}
+
+#svnfileeditor {
+  font-family : inherit;
+  font-size   : 100%;
+  width : 550px;
+  
+  border-left: 0px solid #747E93;
+        border: 1px solid #747E93;
+        
+        border-radius: 5px;
+        background-color: white;
+        padding-top: 0em;
+        padding-bottom: 0em;
+        text-indent:0px;
+        margin-left: 0px; 
+        margin-right: 0px;
+}

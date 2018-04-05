@@ -1,0 +1,145 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.jama.oslc</groupId>
+  <artifactId>com.jama.oslc.adapter</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Jama OSLC Adapter</name>
+  <url>http://maven.apache.org</url>
+    <properties>
+        <server.scheme>http</server.scheme>
+        <server.name>127.0.0.1</server.name>
+        <server.port>8080</server.port>
+        <path.context>${project.build.finalName}</path.context>
+        <path.services>oslc</path.services>
+        <path.vocabulary>vocabulary</path.vocabulary>
+    </properties>
+  <repositories>
+    <repository>
+      <id>lyo-releases</id>
+      <name>Eclipse Lyo Releases</name>
+      <url>https://repo.eclipse.org/content/repositories/lyo-releases/</url>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
+    <repository>
+      <id>lyo-snapshots</id>
+      <name>Eclipse Lyo Snapshots</name>
+      <url>https://repo.eclipse.org/content/repositories/lyo-snapshots/</url>
+      <releases><enabled>false</enabled></releases>
+    </repository>
+  </repositories>
+  <dependencies>
+    <dependency>
+        <groupId>javax.json</groupId>
+        <artifactId>javax.json-api</artifactId>
+        <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <version>3.1.3.Final</version>
+      <scope>provided</scope>
+    </dependency> -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-client</artifactId>
+      <version>3.0.6.Final</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.lyo.oslc4j.core</groupId>
+    	<artifactId>oslc4j-jena-provider</artifactId>
+    	<version>3.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.lyo.clients</groupId>
+      <artifactId>oslc-java-client</artifactId>
+      <version>3.0.0-SNAPSHOT</version>
+    </dependency>
+    
+    
+    
+    <!-- https://mvnrepository.com/artifact/org.glassfish/javax.json -->
+    
+    <!-- The problem is that javax.json-api only contains the API (interfaces) and no implementation.
+
+If your server comes with a pre-bundled implementation this should work, but if not you can add the following dependency to get an implementation 
+    
+<dependency>
+    <groupId>org.glassfish</groupId>
+    <artifactId>javax.json</artifactId>
+    <version>1.1.2</version>
+</dependency>
+    -->
+    
+    
+    
+  </dependencies>
+  <build>
+    <finalName>jama-oslc-adapter</finalName>
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>templating-maven-plugin</artifactId>
+            <version>1.0.0</version>
+            <executions>
+                <execution>
+                    <id>filter-src</id>
+                    <goals><goal>filter-sources</goal></goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+                <webResources>
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>src/main/webapp</directory>
+                    </resource>
+                </webResources>
+            </configuration>
+        </plugin>
+      <plugin>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>1.2.0.Alpha4</version>
+          <configuration>
+              <serverArgs>-Djboss.http.port=8080</serverArgs>
+              <name>${project.build.finalName}.war</name>
+          
+          <!-- for debugging -->
+          <!--
+          <java-opts>
+                        <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8787</java-opt>
+                    </java-opts>
+          -->
+          </configuration>
+          
+          
+         
+          
+          
+          
+          
+      </plugin>
+      <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+              <source>1.8</source>
+              <target>1.8</target>
+          </configuration>
+        </plugin>
+
+    </plugins>
+  </build>
+</project>
