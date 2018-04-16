@@ -147,3 +147,9 @@ with this body
 ### Open-Source License ###
 
 A few files are not released under the MIT license but under the Eclipse Distribution and Eclipse Public licenses. 
+
+### More Documentation ###
+
+- [Review of adapter features with examples](./documentation/OSLC_Jama_Adapter_Features.pdf)
+- [Integration between Jama and MagicDraw using OSLC](./documentation/OSLC-Based_Integration_Between_Jama_and_MagicDraw.pdf) 
+
