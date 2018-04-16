@@ -46,7 +46,7 @@
 
 **Running the Jama OSLC adapter**
 
-- Download this zip file [koneksys-oslc-adapter-jama.zip](./koneksys-oslc-adapter-jama.zip)
+- Download this zip file [koneksys-oslc-adapter-jama.zip](https://github.com/OSLC/oslc-adapter-jama/archive/master.zip)
 - Unzip it
 - Open a terminal (command window) and navigate to the root folder containing the *pom.xml* file of the unzipped file 
 - **Set your your Jama subdomain, username and password** in *config.properties* located in the root folder
