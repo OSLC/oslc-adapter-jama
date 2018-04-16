@@ -7,8 +7,12 @@
 <pre>     </pre>
 <a title="OSLC" href="http://oslc.co/"><img height="90" src="images/OSLC_logo-Extended-LT.png" /></a>
 
-### Features ###
+### Summary ###
 
+- Producer and Consumer of Jama Stakeholder Requirements
+- Producer of requirements according to OSLC Requirements Management (RM)
+
+### Features ###
 
 - Support for exposing resources of type OSLC Service Provider Catalog, OSLC Service Provider, OSLC Service, OSLC Query Capability, OSLC Resource Shape, OSLC Query Resource, OSLC Resource, OSLC ResponseInfo
 - Support for OSLC Core v2 Specification
