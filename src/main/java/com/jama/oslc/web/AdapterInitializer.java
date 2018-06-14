@@ -22,6 +22,8 @@ import com.jama.oslc.model.trs.TRSConstants;
 import com.jama.oslc.model.trs.TrackedResourceSet;
 import com.jama.oslc.resources.RequirementResource;
 
+import net.oauth.OAuthProblemException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,6 +52,10 @@ import java.util.TimerTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -67,6 +73,11 @@ import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory;
+import org.eclipse.lyo.server.oauth.core.Application;
+import org.eclipse.lyo.server.oauth.core.AuthenticationException;
+import org.eclipse.lyo.server.oauth.core.OAuthConfiguration;
+import org.eclipse.lyo.server.oauth.core.OAuthRequest;
+import org.eclipse.lyo.server.oauth.core.token.SimpleTokenStrategy;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 
@@ -84,6 +95,11 @@ public class AdapterInitializer implements ServletContextListener {
 
 	public static String username = null;
 	public static String password = null;
+	
+	public static String admin = null;
+	public static String admin_password = null;
+	
+	public static boolean isOauthEnabled = false;
 
 	public static Map<Integer, Collection<Integer>> reqId_DerivedFromRelationsMap = null;
 	public static Map<Integer, URI> reqIDRequirementMap = null;
@@ -370,6 +386,12 @@ public class AdapterInitializer implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
+		
+		// set up the listener
+//		initFilter(sce);
+//		sce.getServletContext().addListener(listener);
+		
+		
 		try {
 			loadPropertiesFile();
 			readDataPeriodicallyFromJama(sce);
@@ -545,6 +567,11 @@ public class AdapterInitializer implements ServletContextListener {
 
 				username = prop.getProperty("username");
 				password = prop.getProperty("password");
+				
+				admin = prop.getProperty("admin");
+				admin_password = prop.getProperty("admin_password");
+				
+				isOauthEnabled = Boolean.valueOf(prop.getProperty("isOauthEnabled"));
 
 				try {
 					delayInSecondsBetweenDataRefresh = Integer.parseInt(delayInSecondsBetweenDataRefreshFromUser);
@@ -816,4 +843,106 @@ public class AdapterInitializer implements ServletContextListener {
 		}
 
 	}
+	
+	
+//	public static void initFilter(ServletContextEvent sce) {
+//		OAuthConfiguration config = OAuthConfiguration.getInstance();
+//		
+////		// Add session listener
+////		HttpSessionListener listener = new HttpSessionListener() {
+////			@Override
+////			public void sessionDestroyed(HttpSessionEvent se) {
+////				HttpSession session = se.getSession();
+////				@SuppressWarnings("unchecked")
+////				Connection loginSession = (Connection) session.getAttribute(CONNECTOR_ATTRIBUTE);
+////				logout(loginSession, session);
+////			}
+////			
+////			@Override
+////			public void sessionCreated(HttpSessionEvent se) {
+////				// nothing
+////			}
+////		};
+////		sce.getServletContext().addListener(listener);
+//
+//		// Validates a user's ID and password.
+//		config.setApplication(new Application() {
+//			@Override
+//			public void login(HttpServletRequest request, String id,
+//					String password) throws AuthenticationException {
+//				try {
+//					Credentials creds = getCredentialsForOAuth(id, password);
+//					request.getSession().setAttribute(CREDENTIALS_ATTRIBUTE, creds);
+//					
+//					Connection bc = AbstractAdapterCredentialsFilter2.this.login(creds, request);
+//					request.setAttribute(CONNECTOR_ATTRIBUTE, bc);
+//					
+//					boolean isAdmin = AbstractAdapterCredentialsFilter2.this.isAdminSession(id, bc, request);
+//					request.getSession().setAttribute(ADMIN_SESSION_ATTRIBUTE, isAdmin);
+//				} catch (Exception e) {
+//					throw new AuthenticationException(e.getCause().getMessage(), e);
+//				}
+//			}
+//
+//			@Override
+//			public String getName() {
+//				// Display name for this application.
+//				return getDisplayName();
+//			}
+//
+//			@Override
+//			public boolean isAdminSession(HttpServletRequest request) {
+//				return Boolean.TRUE.equals(request.getSession().getAttribute(
+//						ADMIN_SESSION_ATTRIBUTE));
+//			}
+//
+//			@Override
+//			public String getRealm(HttpServletRequest request) {
+//				return getOAuthRealm();
+//			}
+//
+//			@Override
+//			public boolean isAuthenticated(HttpServletRequest request) {
+//				@SuppressWarnings("unchecked")
+//				Connection connector = (Connection) request.getSession().getAttribute(CONNECTOR_ATTRIBUTE);
+//				if (connector == null) {
+//					return false;
+//				}
+//				request.setAttribute(CONNECTOR_ATTRIBUTE, connector);
+//				return true;
+//			}
+//		});
+//
+//		/*
+//		 * Override some SimpleTokenStrategy methods so that we can keep the
+//		 * Connector associated with the OAuth tokens.
+//		 */
+//		config.setTokenStrategy(new SimpleTokenStrategy() {
+//			@SuppressWarnings("unchecked")
+//			@Override
+//			public void markRequestTokenAuthorized(
+//					HttpServletRequest httpRequest, String requestToken)
+//					throws OAuthProblemException {
+//				tokenToConnectionCache.put(requestToken,
+//						(Connection) httpRequest.getAttribute(CONNECTOR_ATTRIBUTE));
+//				super.markRequestTokenAuthorized(httpRequest, requestToken);
+//			}
+//
+//			@Override
+//			public void generateAccessToken(OAuthRequest oAuthRequest)
+//					throws OAuthProblemException, IOException {
+//				String requestToken = oAuthRequest.getMessage().getToken();
+//				Connection bc = tokenToConnectionCache.remove(requestToken);
+//				super.generateAccessToken(oAuthRequest);
+//				tokenToConnectionCache.put(oAuthRequest.getAccessor().accessToken, bc);
+//			}
+//		});
+//
+//		try {
+//			// For now, hard-code the consumers.
+//			config.setConsumerStore(JamaCredentialsFilter.createConsumerStore());
+//		} catch (Throwable t) {
+//			System.err.println("Error initializing the OAuth consumer store: " +  t.getMessage());
+//		}
+//	}
 }
