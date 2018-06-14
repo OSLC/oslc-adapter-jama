@@ -1,0 +1,11 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://eclipse.org/lyo/server/oauth#">
+  <j.0:Consumer>
+    <j.0:consumerName>magicdraw</j.0:consumerName>
+    <j.0:consumerKey>testkey</j.0:consumerKey>
+    <j.0:consumerSecret>dGVzdHNlY3JldA==</j.0:consumerSecret>
+    <j.0:provisional>false</j.0:provisional>
+    <j.0:trusted>false</j.0:trusted>
+  </j.0:Consumer>
+</rdf:RDF>
