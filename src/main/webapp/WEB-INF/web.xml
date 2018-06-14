@@ -33,4 +33,15 @@
     <servlet-name>uipreview-servlet</servlet-name>
     <url-pattern>/uipreview/*</url-pattern>
   </servlet-mapping>
+  
+  <filter>
+    <display-name>JamaCredentialsFilter</display-name>
+    <filter-name>JamaCredentialsFilter</filter-name>
+    <filter-class>com.jama.oslc.web.JamaCredentialsFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>JamaCredentialsFilter</filter-name>
+    <url-pattern>/services/*</url-pattern>
+  </filter-mapping>
+  
 </web-app>
