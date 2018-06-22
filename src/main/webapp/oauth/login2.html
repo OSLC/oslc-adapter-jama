@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>Connect to Jama</title>
+<link type="text/css" href="<%=request.getContextPath()%>/oauth/stylesheets/theme.css" rel="stylesheet" ></link>
+
+<script
+	data-dojo-config="async: true"
+    type="text/javascript"
+    src="//ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js">
+</script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/oauth/scripts/login.js"></script>
+</head>
+
+<body>
+	<div id="content">
+		
+		<h1>Connect to Jama</h1>
+
+		<form id="loginForm">
+		
+			<p><b>Jama application</b>
+			is requesting access to your <b>Jama</b> data. Enter your
+			username and password to continue or click cancel to exit.</p>
+
+			
+
+			<div id="error" class="error" style="display: none;"></div>
+			<input type="hidden" name="requestToken" value="requestToken"/>">
+			<input type="hidden" id="callback" value="callback"/>">
+			
+			<div>
+				<label for="id">Username:</label>
+			</div>
+			<div>
+			 	<input id="id" name="id" type="text" class="textField" required autofocus></input>
+				<script type="text/javascript">
+					// If no native HTML5 autofocus support, focus the ID field using JavaScript.
+		    		if (!("autofocus" in document.createElement("input"))) {
+		      			document.getElementById("id").focus();
+		    		}
+		  		</script>
+			</div>
+	
+			<div>
+				<label for="password">Password:</label>
+			</div>
+				<input id="password" name="password" type="password" class="textField"></input>
+			<div>
+			</div>
+			<div>
+				<input type="submit" value="OK">
+				<button type="button" id="cancel">Cancel</button>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>
