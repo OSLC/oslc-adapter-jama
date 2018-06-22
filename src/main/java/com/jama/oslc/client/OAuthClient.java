@@ -15,10 +15,14 @@ import net.oauth.OAuthException;
 public class OAuthClient {
 
 	public static void main(String[] args) {
-		String baseUrl = "http://localhost:8080/jama-oslc-adapter/services/";
+		String baseUrl = "http://localhost:8080/jama-oslc-adapter/services/";		
+		String consumerKey = "testkey";
+		String consumerSecret = "testsecret";
+		String oauthRealmName = "Jama";
+		
 		OslcOAuthClient oslcOAuthClient = new OslcOAuthClient(baseUrl + "oauth/requestToken", 
 				baseUrl + "oauth/authorize", 
-				baseUrl + "oauth/accessToken", "consumerKey", "consumerSecret");
+				baseUrl + "oauth/accessToken", consumerKey, consumerSecret, oauthRealmName);
 
 		try {
 			ClientResponse clientResponse = oslcOAuthClient.getResource("http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog", OSLCConstants.CT_RDF);

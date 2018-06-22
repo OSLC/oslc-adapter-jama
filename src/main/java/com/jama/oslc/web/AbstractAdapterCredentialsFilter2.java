@@ -254,12 +254,24 @@ abstract public class AbstractAdapterCredentialsFilter2<Credentials, Connection>
 		        return;
 			}
 			
+						// check if request is to an oauth resource
+						if (request.getPathInfo().startsWith("/oauth")) {
+							chain.doFilter(request, response);
+							return;
+						}
+
+						// check if request is to the rootservices resource
+						if (request.getPathInfo().startsWith("/rootservices")) {
+							chain.doFilter(request, response);
+							return;
+						}
+			
 			boolean isTwoLeggedOAuthRequest = false;
 			String twoLeggedOAuthConsumerKey = null;
 			
 			//Don't protect requests to rootservices service.   
-			if (! request.getPathInfo().startsWith("/rootservices"))
-			{
+//			if (! request.getPathInfo().startsWith("/rootservices"))
+//			{
 			
 				// First check if this is an OAuth request.
 				try {
@@ -340,7 +352,7 @@ abstract public class AbstractAdapterCredentialsFilter2<Credentials, Connection>
 					return;
 				}
 				
-			}
+//			}
 		}
 		
 		chain.doFilter(servletRequest, servletResponse);
