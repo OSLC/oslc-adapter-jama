@@ -83,7 +83,8 @@ public class JamaCredentialsFilter extends AbstractAdapterCredentialsFilter2 {
 
 	@Override
 	protected ConsumerStore createConsumerStore() throws Exception {
-		return new FileSystemConsumerStore("jamaOAuthStore.xml");
+//		return new FileSystemConsumerStore("jamaOAuthStore.xml");
+		return new FileSystemConsumerStore(AdapterInitializer.localConsumerStoreLocation);
 	}
 
 }
