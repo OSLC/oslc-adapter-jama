@@ -84,9 +84,8 @@ import org.jboss.resteasy.client.ClientResponse;
 public class AdapterInitializer implements ServletContextListener {
 
 	public static Map<String, String> projectIdAndNameMap = null;
-	static String warConfigFilePath = "../config.properties";
+
 	static String localConfigFilePath = "config.properties";
-	static String configFilePath = null;
 
 	public static String portNumber = null;
 	static int delayInSecondsBetweenDataRefresh = 100000;
@@ -95,11 +94,13 @@ public class AdapterInitializer implements ServletContextListener {
 
 	public static String username = null;
 	public static String password = null;
-	
+
 	public static String admin = null;
 	public static String admin_password = null;
-	
+
 	public static boolean isOauthEnabled = false;
+
+	public static String localConsumerStoreLocation = null;
 
 	public static Map<Integer, Collection<Integer>> reqId_DerivedFromRelationsMap = null;
 	public static Map<Integer, URI> reqIDRequirementMap = null;
@@ -386,17 +387,15 @@ public class AdapterInitializer implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		
+
 		// set up the listener
-//		initFilter(sce);
-//		sce.getServletContext().addListener(listener);
-		
-		
+		// initFilter(sce);
+		// sce.getServletContext().addListener(listener);
+
 		try {
 			loadPropertiesFile();
 			readDataPeriodicallyFromJama(sce);
-		}		
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -536,62 +535,38 @@ public class AdapterInitializer implements ServletContextListener {
 		Properties prop = new Properties();
 		InputStream input = null;
 
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
 		try {
-			// loading properties file
-			// input = new FileInputStream("./configuration/config.properties");
-			input = new FileInputStream(warConfigFilePath); // for war file
-			configFilePath = warConfigFilePath;
-		} catch (FileNotFoundException e) {
-			try {
-				input = new FileInputStream(localConfigFilePath);
-				configFilePath = localConfigFilePath;
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} // for war file
+			prop.load(loader.getResourceAsStream(localConfigFilePath));
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 
 		// load property file content and convert backslashes into forward
 		// slashes
-		String str;
-		if (input != null) {
-			try {
-				str = readFile(configFilePath, Charset.defaultCharset());
-				prop.load(new StringReader(str.replace("\\", "/")));
 
-				// get the property value
+		// get the property value
 
-				String delayInSecondsBetweenDataRefreshFromUser = prop.getProperty("delayInSecondsBetweenDataRefresh");
-				jamaInstanceName = portNumber = prop.getProperty("jamaInstanceName");
-				portNumber = prop.getProperty("portNumber");
+		String delayInSecondsBetweenDataRefreshFromUser = prop.getProperty("delayInSecondsBetweenDataRefresh");
+		jamaInstanceName = portNumber = prop.getProperty("jamaInstanceName");
+		portNumber = prop.getProperty("portNumber");
 
-				username = prop.getProperty("username");
-				password = prop.getProperty("password");
-				
-				admin = prop.getProperty("admin");
-				admin_password = prop.getProperty("admin_password");
-				
-				isOauthEnabled = Boolean.valueOf(prop.getProperty("isOauthEnabled"));
+		username = prop.getProperty("username");
+		password = prop.getProperty("password");
 
-				try {
-					delayInSecondsBetweenDataRefresh = Integer.parseInt(delayInSecondsBetweenDataRefreshFromUser);
-				} catch (Exception e) {
+		admin = prop.getProperty("admin");
+		admin_password = prop.getProperty("admin_password");
 
-				}
+		isOauthEnabled = Boolean.valueOf(prop.getProperty("isOauthEnabled"));
 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
+		try {
+			delayInSecondsBetweenDataRefresh = Integer.parseInt(delayInSecondsBetweenDataRefreshFromUser);
+		} catch (Exception e) {
 
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			}
 		}
+
+		localConsumerStoreLocation = prop.getProperty("localConsumerStoreLocation");
 
 	}
 
@@ -789,13 +764,10 @@ public class AdapterInitializer implements ServletContextListener {
 				// counting the number of links
 				int linksCount = reqId_DerivedFromRelationsMap.get(reqID).size();
 
-				
-				
-				
 				// creating linksArray
 
 				if (linksCount > 0) {
-					
+
 					// get links count to other reqs
 					int realLinkCount = 0;
 					for (Integer reqID2 : reqId_DerivedFromRelationsMap.get(reqID)) {
@@ -810,9 +782,8 @@ public class AdapterInitializer implements ServletContextListener {
 						}
 
 					}
-					
-					
-					if(realLinkCount >0 ) {
+
+					if (realLinkCount > 0) {
 						Link[] linksArray = null;
 						linksArray = new Link[realLinkCount];
 
@@ -834,8 +805,7 @@ public class AdapterInitializer implements ServletContextListener {
 						}
 						requirement.setDerivedFrom(linksArray);
 					}
-					
-					
+
 				}
 
 			}
@@ -843,106 +813,109 @@ public class AdapterInitializer implements ServletContextListener {
 		}
 
 	}
-	
-	
-//	public static void initFilter(ServletContextEvent sce) {
-//		OAuthConfiguration config = OAuthConfiguration.getInstance();
-//		
-////		// Add session listener
-////		HttpSessionListener listener = new HttpSessionListener() {
-////			@Override
-////			public void sessionDestroyed(HttpSessionEvent se) {
-////				HttpSession session = se.getSession();
-////				@SuppressWarnings("unchecked")
-////				Connection loginSession = (Connection) session.getAttribute(CONNECTOR_ATTRIBUTE);
-////				logout(loginSession, session);
-////			}
-////			
-////			@Override
-////			public void sessionCreated(HttpSessionEvent se) {
-////				// nothing
-////			}
-////		};
-////		sce.getServletContext().addListener(listener);
-//
-//		// Validates a user's ID and password.
-//		config.setApplication(new Application() {
-//			@Override
-//			public void login(HttpServletRequest request, String id,
-//					String password) throws AuthenticationException {
-//				try {
-//					Credentials creds = getCredentialsForOAuth(id, password);
-//					request.getSession().setAttribute(CREDENTIALS_ATTRIBUTE, creds);
-//					
-//					Connection bc = AbstractAdapterCredentialsFilter2.this.login(creds, request);
-//					request.setAttribute(CONNECTOR_ATTRIBUTE, bc);
-//					
-//					boolean isAdmin = AbstractAdapterCredentialsFilter2.this.isAdminSession(id, bc, request);
-//					request.getSession().setAttribute(ADMIN_SESSION_ATTRIBUTE, isAdmin);
-//				} catch (Exception e) {
-//					throw new AuthenticationException(e.getCause().getMessage(), e);
-//				}
-//			}
-//
-//			@Override
-//			public String getName() {
-//				// Display name for this application.
-//				return getDisplayName();
-//			}
-//
-//			@Override
-//			public boolean isAdminSession(HttpServletRequest request) {
-//				return Boolean.TRUE.equals(request.getSession().getAttribute(
-//						ADMIN_SESSION_ATTRIBUTE));
-//			}
-//
-//			@Override
-//			public String getRealm(HttpServletRequest request) {
-//				return getOAuthRealm();
-//			}
-//
-//			@Override
-//			public boolean isAuthenticated(HttpServletRequest request) {
-//				@SuppressWarnings("unchecked")
-//				Connection connector = (Connection) request.getSession().getAttribute(CONNECTOR_ATTRIBUTE);
-//				if (connector == null) {
-//					return false;
-//				}
-//				request.setAttribute(CONNECTOR_ATTRIBUTE, connector);
-//				return true;
-//			}
-//		});
-//
-//		/*
-//		 * Override some SimpleTokenStrategy methods so that we can keep the
-//		 * Connector associated with the OAuth tokens.
-//		 */
-//		config.setTokenStrategy(new SimpleTokenStrategy() {
-//			@SuppressWarnings("unchecked")
-//			@Override
-//			public void markRequestTokenAuthorized(
-//					HttpServletRequest httpRequest, String requestToken)
-//					throws OAuthProblemException {
-//				tokenToConnectionCache.put(requestToken,
-//						(Connection) httpRequest.getAttribute(CONNECTOR_ATTRIBUTE));
-//				super.markRequestTokenAuthorized(httpRequest, requestToken);
-//			}
-//
-//			@Override
-//			public void generateAccessToken(OAuthRequest oAuthRequest)
-//					throws OAuthProblemException, IOException {
-//				String requestToken = oAuthRequest.getMessage().getToken();
-//				Connection bc = tokenToConnectionCache.remove(requestToken);
-//				super.generateAccessToken(oAuthRequest);
-//				tokenToConnectionCache.put(oAuthRequest.getAccessor().accessToken, bc);
-//			}
-//		});
-//
-//		try {
-//			// For now, hard-code the consumers.
-//			config.setConsumerStore(JamaCredentialsFilter.createConsumerStore());
-//		} catch (Throwable t) {
-//			System.err.println("Error initializing the OAuth consumer store: " +  t.getMessage());
-//		}
-//	}
+
+	// public static void initFilter(ServletContextEvent sce) {
+	// OAuthConfiguration config = OAuthConfiguration.getInstance();
+	//
+	//// // Add session listener
+	//// HttpSessionListener listener = new HttpSessionListener() {
+	//// @Override
+	//// public void sessionDestroyed(HttpSessionEvent se) {
+	//// HttpSession session = se.getSession();
+	//// @SuppressWarnings("unchecked")
+	//// Connection loginSession = (Connection)
+	// session.getAttribute(CONNECTOR_ATTRIBUTE);
+	//// logout(loginSession, session);
+	//// }
+	////
+	//// @Override
+	//// public void sessionCreated(HttpSessionEvent se) {
+	//// // nothing
+	//// }
+	//// };
+	//// sce.getServletContext().addListener(listener);
+	//
+	// // Validates a user's ID and password.
+	// config.setApplication(new Application() {
+	// @Override
+	// public void login(HttpServletRequest request, String id,
+	// String password) throws AuthenticationException {
+	// try {
+	// Credentials creds = getCredentialsForOAuth(id, password);
+	// request.getSession().setAttribute(CREDENTIALS_ATTRIBUTE, creds);
+	//
+	// Connection bc = AbstractAdapterCredentialsFilter2.this.login(creds, request);
+	// request.setAttribute(CONNECTOR_ATTRIBUTE, bc);
+	//
+	// boolean isAdmin = AbstractAdapterCredentialsFilter2.this.isAdminSession(id,
+	// bc, request);
+	// request.getSession().setAttribute(ADMIN_SESSION_ATTRIBUTE, isAdmin);
+	// } catch (Exception e) {
+	// throw new AuthenticationException(e.getCause().getMessage(), e);
+	// }
+	// }
+	//
+	// @Override
+	// public String getName() {
+	// // Display name for this application.
+	// return getDisplayName();
+	// }
+	//
+	// @Override
+	// public boolean isAdminSession(HttpServletRequest request) {
+	// return Boolean.TRUE.equals(request.getSession().getAttribute(
+	// ADMIN_SESSION_ATTRIBUTE));
+	// }
+	//
+	// @Override
+	// public String getRealm(HttpServletRequest request) {
+	// return getOAuthRealm();
+	// }
+	//
+	// @Override
+	// public boolean isAuthenticated(HttpServletRequest request) {
+	// @SuppressWarnings("unchecked")
+	// Connection connector = (Connection)
+	// request.getSession().getAttribute(CONNECTOR_ATTRIBUTE);
+	// if (connector == null) {
+	// return false;
+	// }
+	// request.setAttribute(CONNECTOR_ATTRIBUTE, connector);
+	// return true;
+	// }
+	// });
+	//
+	// /*
+	// * Override some SimpleTokenStrategy methods so that we can keep the
+	// * Connector associated with the OAuth tokens.
+	// */
+	// config.setTokenStrategy(new SimpleTokenStrategy() {
+	// @SuppressWarnings("unchecked")
+	// @Override
+	// public void markRequestTokenAuthorized(
+	// HttpServletRequest httpRequest, String requestToken)
+	// throws OAuthProblemException {
+	// tokenToConnectionCache.put(requestToken,
+	// (Connection) httpRequest.getAttribute(CONNECTOR_ATTRIBUTE));
+	// super.markRequestTokenAuthorized(httpRequest, requestToken);
+	// }
+	//
+	// @Override
+	// public void generateAccessToken(OAuthRequest oAuthRequest)
+	// throws OAuthProblemException, IOException {
+	// String requestToken = oAuthRequest.getMessage().getToken();
+	// Connection bc = tokenToConnectionCache.remove(requestToken);
+	// super.generateAccessToken(oAuthRequest);
+	// tokenToConnectionCache.put(oAuthRequest.getAccessor().accessToken, bc);
+	// }
+	// });
+	//
+	// try {
+	// // For now, hard-code the consumers.
+	// config.setConsumerStore(JamaCredentialsFilter.createConsumerStore());
+	// } catch (Throwable t) {
+	// System.err.println("Error initializing the OAuth consumer store: " +
+	// t.getMessage());
+	// }
+	// }
 }
