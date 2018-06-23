@@ -49,7 +49,7 @@
 - Download this zip file [koneksys-oslc-adapter-jama.zip](https://github.com/OSLC/oslc-adapter-jama/archive/master.zip)
 - Unzip it
 - Open a terminal (command window) and navigate to the root folder containing the *pom.xml* file of the unzipped file 
-- **Set your your Jama subdomain, username and password** in *config.properties* located in the root folder
+- **Set your your Jama subdomain, username and password** in *config.properties* located in the src/main/resources folder
 - Run the adapter with this command `mvn clean install wildfly:run`
 - Perform `CTRL+C` to stop the adapter
 
