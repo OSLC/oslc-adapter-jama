@@ -54,7 +54,8 @@ public class JamaCredentialsFilter extends AbstractAdapterCredentialsFilter2 {
 		if (credentialsObject instanceof Credentials) {
 			Credentials credentials = (Credentials) credentialsObject;
 			try {
-				FileSystemConsumerStore fileSystemConsumerStore = new FileSystemConsumerStore("jamaOAuthStore.xml");
+//				FileSystemConsumerStore fileSystemConsumerStore = new FileSystemConsumerStore("jamaOAuthStore.xml");
+				FileSystemConsumerStore fileSystemConsumerStore = new FileSystemConsumerStore(AdapterInitializer.localConsumerStoreLocation);
 				LyoOAuthConsumer consumer = fileSystemConsumerStore.getConsumer(credentials.getUsername());
 				if (consumer == null) {
 					throw new com.jama.oslc.web.UnauthorizedException();
