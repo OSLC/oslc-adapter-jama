@@ -341,15 +341,15 @@ abstract public class AbstractAdapterCredentialsFilter2<Credentials, Connection>
 			if (connector == null) {
 				try {
 					Credentials credentials;
-					if (isTwoLeggedOAuthRequest) {
-						connector = tokenToConnectionCache.get("");
-						if (connector == null) {
-							credentials = getCredentialsForOAuth(OAUTH_EMPTY_TOKEN_KEY, twoLeggedOAuthConsumerKey);
-							connector = login(credentials, request);
-							tokenToConnectionCache.put("", connector);
-						}
-						credentials = null; // TODO; Do we need to keep the credentials for this path ??
-					} else {
+//					if (isTwoLeggedOAuthRequest) {
+//						connector = tokenToConnectionCache.get("");
+//						if (connector == null) {
+//							credentials = getCredentialsForOAuth(OAUTH_EMPTY_TOKEN_KEY, twoLeggedOAuthConsumerKey);
+//							connector = login(credentials, request);
+//							tokenToConnectionCache.put("", connector);
+//						}
+//						credentials = null; // TODO; Do we need to keep the credentials for this path ??
+//					} else {
 						credentials = (Credentials) request.getSession().getAttribute(CREDENTIALS_ATTRIBUTE);
 						if (credentials == null) {
 							credentials = getCredentialsFromRequest(request);
@@ -358,23 +358,27 @@ abstract public class AbstractAdapterCredentialsFilter2<Credentials, Connection>
 							}
 						}
 						connector = login(credentials, request);
-					}
+//					}
 					session.setAttribute(CONNECTOR_ATTRIBUTE, connector);
 					session.setAttribute(CREDENTIALS_ATTRIBUTE, credentials);
 
 				} catch (UnauthorizedException e) {
-					sendUnauthorizedResponse(response, e);
-					System.err.println(e.getMessage());
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Oauth-based authentication required");
+//					sendUnauthorizedResponse(response, e);
+//					System.err.println(e.getMessage());
 					return;
 				} catch (ServletException ce) {
 					throw ce;
 				}
 			}
 
+			
+			
 			if (connector != null) {
 				doChainDoFilterWithConnector(request, response, chain, connector);
 				return;
 			}
+			//response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Oauth-based authentication required");
 
 			// }
 		}
