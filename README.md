@@ -1,4 +1,4 @@
-## Jama OSLC Adapter ##
+## Jama OSLC API ##
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -22,14 +22,14 @@
 - Support for RDF representation of resources
 - Support for UI Preview of requirement resources
 - Support for exposing change events according to OSLC Tracked Resource Set (but only fake change events, not real ones occurring really in Jama)
-- Support for syncing OSLC adapter with Jama REST API during launch of OSLC adapter as well as through periodic syncing based on configuration setting
-- Support for configuration of adapter (port number, Jama instance to retrieve data from, time between periodic syncs)
-- Creation of OSLC adapter client in Java to test each OSLC adapter service
+- Support for syncing OSLC API with Jama REST API during launch of OSLC API as well as through periodic syncing based on configuration setting
+- Support for configuration of OSLC API (port number, Jama instance to retrieve data from, time between periodic syncs)
+- Creation of OSLC API client in Java to test each OSLC API service
 - Creation of HTML/JavaScript client to test OSLC UI Preview of requirement resources
 - Support for hosting Jama RDF vocabulary
 - Support for Jama-specific RDF namespace
-- Support for OAuth (3-legged OAuth v1.0 authentication in the same style as for IBM CLM applications as described by Michael Fiedler in this [video](https://www.youtube.com/watch?v=kcEjftQA-LU)
-- Support for rootservices (in the same style as for IBM Jazz applications)
+- Support for 3-legged OAuth v1.0 authentication in the same style as for IBM CLM applications as described by Michael Fiedler in this [video](https://www.youtube.com/watch?v=kcEjftQA-LU)
+- Support for rootservices in the same style as for IBM Jazz applications
 
 ### Installation Instructions ###
 
@@ -42,11 +42,12 @@
 `mvn --version`
 - Install Java JDK 8 from [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - Make sure that the environment variable JAVA\_HOME is pointing to the JDK and not the JRE folder. JAVA\_HOME should be pointing for example to *C:\Program Files\Java\jdk1.8.0_02*. Instructions to set JAVA\_HOME depending of your OS are [here](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t)
+- If you choose to run the OSLC API on a different port than 8080, change the port in in [config.properties](src/main/resources/config.properties) and in [pom.xml](pom.xml) in `<server.port>8080</server.port>`
 
 
 **Configuration to enable OAuth (optional)**
 
-- Skip this section if you want to launch the adapter without OAuth authentication
+- Skip this section if you want to launch the OSLC API without OAuth authentication
 - **Choose to enable OAuth authentication (e.g. isOauthEnabled = true)** in [config.properties](src/main/resources/config.properties) 
 - OSLC Jama API uses its own consumerstore. You can use an existing one by downloading on your machine [jamaOAuthStore.xml](jamaOAuthStore.xml). This consumerstore already contains a consumer named *magicdraw* having *testkey* as key and *testsecret* as secret. The secret is encrypted in *jamaOAuthStore.xml*. 
 - If you prefer to create a new consumerstore with different consumer credentials, you can modify and run [ConsumerStoreCreator.java](src\main\java\com\jama\oslc\web\ConsumerStoreCreator.java) 
@@ -58,16 +59,16 @@
 - In the standalone/configuration/standalone.xml file change the servlet-container XML element so that it has the attribute *allow-non-standard-wrappers="true"*.
  
 
-**Running the Jama OSLC adapter**
+**Running the Jama OSLC API**
 
 - Download this zip file [koneksys-oslc-adapter-jama.zip](https://github.com/OSLC/oslc-adapter-jama/archive/master.zip)
 - Unzip it
 - Open a terminal (command window) and navigate to the root folder containing the *pom.xml* file of the unzipped file 
 - **Set your your Jama subdomain, username and password** in [config.properties](src/main/resources/config.properties). Keep in mind that the OSLC Jama API uses the credentials of a regular Jama user account to communicate with the Jama REST API. 
 - **Choose to enable or disable OAuth authentication** (e.g. isOauthEnabled = false) in [config.properties](src/main/resources/config.properties) 
-- **If OAuth is disabled**, run the adapter by opening a command prompt, change your directory to the root directory of the Jama OSLC API, the one containing the pom.xml file, and then run this command `mvn clean install wildfly:run`
+- **If OAuth is disabled**, run the OSLC API by opening a command prompt, change your directory to the root directory of the Jama OSLC API, the one containing the pom.xml file, and then run this command `mvn clean install wildfly:run`
 - **If OAuth is enabled**, first make sure that you have set up a management user account for Wildfly. You can create one by running the *adduser* script (e.g. by running the *{Wildfly root}/bin/add-user* batch file on Windows), launch the standalone Wildfly server (e.g. by running the *{Wildfly root}/bin/standalone* batch file on Windows), compile the Maven project of the Jama OSLC API  using a command prompt as described in the step before if OAuth is disabled but with this command `mvn clean install`, verify that the war file has been created at *target\jama-oslc-adapter.war*, open in your browser this page [http://localhost:9990/console/App.html#standalone-deployments](http://localhost:9990/console/App.html#standalone-deployments) by signing in with your Wildfly management user account, click the *Add* button and select the *target\jama-oslc-adapter.war* file. Wildly will then host the Jama OSLC API
-- Perform `CTRL+C` to stop the adapter
+- Perform `CTRL+C` to stop the OSLC API
 
 ### Getting Started ###
 
@@ -112,20 +113,20 @@ After entering the authorization url in a browser, you will see a login screen w
 
 You can reuse the Jama user account credentials defined in [config.properties](src/main/resources/config.properties). If your credentials are valid, you should see this message in the browser: *Request authorized*. Then you can access all resources of the OSLC Jama API as if OAuth was disabled. 
 
-Start with the **Service Provider Catalog** resource (entry point resource) at [http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog](http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog). It will show you the Jama projects exposed by the adapter. The ServiceProviderCatalog has links to ServiceProvider resources, one for each Jama project containing an item of type Stakeholder requirement (item type id = 45).
+Start with the **Service Provider Catalog** resource (entry point resource) at [http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog](http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog). It will show you the Jama projects exposed by the OSLC API. The ServiceProviderCatalog has links to ServiceProvider resources, one for each Jama project containing an item of type Stakeholder requirement (item type id = 45).
 
-Click on a **ServiceProvider resource** (e.g. [http://localhost:8080/jama-oslc-adapter/services/serviceProvider/Semiconductor_Sample_Set](http://localhost:8080/jama-oslc-adapter/services/serviceProvider/Semiconductor_Sample_Set)). It describes a Jama project. A ServiceProvider resource has links to **Service** resources. In the case of the Jama adapter, a Service resource has links to a **CreationFactory** and a **QueryCapability** resource. As the ServiceProvider resource contains the inline representation of the Service, CreationFRactory and QueryCapability resources, the HTML representation of the ServiceProvider directly resource displays  the details of the CreationFaactory and QueryCapability resources. The inline representation of linked resources in the ServiceProvider resource is visible when viewing the RDF representation of the ServiceProvider resource. 
+Click on a **ServiceProvider resource** (e.g. [http://localhost:8080/jama-oslc-adapter/services/serviceProvider/Semiconductor_Sample_Set](http://localhost:8080/jama-oslc-adapter/services/serviceProvider/Semiconductor_Sample_Set)). It describes a Jama project. A ServiceProvider resource has links to **Service** resources. In the case of the Jama OSLC API, a Service resource has links to a **CreationFactory** and a **QueryCapability** resource. As the ServiceProvider resource contains the inline representation of the Service, CreationFRactory and QueryCapability resources, the HTML representation of the ServiceProvider directly resource displays  the details of the CreationFaactory and QueryCapability resources. The inline representation of linked resources in the ServiceProvider resource is visible when viewing the RDF representation of the ServiceProvider resource. 
 
-Click on a **Jama Requirements Query Capability** (e.g. [http://localhost:8080/jama-oslc-adapter/services/Semiconductor_Sample_Set/requirement](http://localhost:8080/jama-oslc-adapter/services/Semiconductor_Sample_Set/requirement)). It will display all requirements contained in a a Jama project. Note: it will only display requirements of type "Stakeholder Requirement". Additional requirements types can be exposed by the adapter through additional item type-specific query capabilities or through a single query capability exposing all requirements as items with different types. The **Jama Requirements Creation Factory** resource is primarily used by applications using the adapter as a client. The Creation Factory resource therefore does not require an HTML representation. As a reminder, all HTML representations of resources provided by the adapter are optional. Only the RDF representation of resources exposed by the adapter is mandatory.  
+Click on a **Jama Requirements Query Capability** (e.g. [http://localhost:8080/jama-oslc-adapter/services/Semiconductor_Sample_Set/requirement](http://localhost:8080/jama-oslc-adapter/services/Semiconductor_Sample_Set/requirement)). It will display all requirements contained in a a Jama project. Note: it will only display requirements of type "Stakeholder Requirement". Additional requirements types can be exposed by the OSLC API through additional item type-specific query capabilities or through a single query capability exposing all requirements as items with different types. The **Jama Requirements Creation Factory** resource is primarily used by applications using the OSLC API as a client. The Creation Factory resource therefore does not require an HTML representation. As a reminder, all HTML representations of resources provided by the OSLC API are optional. Only the RDF representation of resources exposed by the OSLC API is mandatory.  
 
 Click on an individual Jama Requirement **resource** (e.g. [http://localhost:8080/jama-oslc-adapter/services/Semiconductor_Sample_Set/requirement/3919](http://localhost:8080/jama-oslc-adapter/services/Semiconductor_Sample_Set/requirement/3919)). It will display the main attributes of a Jama requirement. 
 
-Access this [web page](http://localhost:8080/jama-oslc-adapter/uipreview) hosted by the adapter to test OSLC UI Preview. Hover over the link to a Jama requirement to see a UI preview window pop up. The UI Preview window can contain custom information and be formatted in various ways. The window size (height, width, and small vs large preview) information is defined according to the OSLC standard.
+Access this [web page](http://localhost:8080/jama-oslc-adapter/uipreview) hosted by the OSLC API to test the OSLC UI Preview. Hover over the link to a Jama requirement to see a UI preview window pop up. The UI Preview window can contain custom information and be formatted in various ways. The window size (height, width, and small vs large preview) information is defined according to the OSLC standard.
 
-### Testing the adapter manually using curl or a REST client ###
+### Testing the OSLC API manually using curl or a REST client ###
 
 - Install curl (Instructions for Windows can be found [here](http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/13_2/messagingservice/files/installing_curl_command_line_tool_on_windows.html))
-- Run following curl commands in the command window, or equivalent commands in your REST client (e.g. [Postman](https://www.getpostman.com/)), to get the RDF representation of resources exposed by the adapter
+- Run following curl commands in the command window, or equivalent commands in your REST client (e.g. [Postman](https://www.getpostman.com/)), to get the RDF representation of resources exposed by the OSLC API
  
 *Service Provider Catalog*
 
@@ -191,9 +192,9 @@ with this body
 
 
 
-### Testing the adapter automatically ###
+### Testing the OSLC API automatically ###
 
-- Run as Java application the class [JamaAdapterDiscoveryClient.java](./src/main/java/com/jama/oslc/client/JamaAdapterDiscoveryClient.java). It will print our in the console a summarized representation of the resources of the OSLC adapter discovered by the client using only the Service Provider Catalog resource as entry point
+- Run as Java application the class [JamaAdapterDiscoveryClient.java](./src/main/java/com/jama/oslc/client/JamaAdapterDiscoveryClient.java). It will print our in the console a summarized representation of the resources of the OSLC API discovered by the client using only the Service Provider Catalog resource as entry point
 - Run as Java application the class [JamaAdapterPOSTClient.java](./src/main/java/com/jama/oslc/client/JamaAdapterPOSTClient.java) to test adding a new Requirement to Jama. 
 
 ### Open-Source License ###
@@ -202,6 +203,6 @@ A few files are not released under the MIT license but under the Eclipse Distrib
 
 ### More Documentation ###
 
-- [Review of adapter features with examples](./documentation/OSLC_Jama_Adapter_Features.pdf)
+- [Review of OSLC API features with examples](./documentation/OSLC_Jama_Adapter_Features.pdf)
 - [Integration between Jama and MagicDraw using OSLC](./documentation/OSLC-Based_Integration_Between_Jama_and_MagicDraw.pdf) 
 
