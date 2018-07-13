@@ -108,10 +108,6 @@ Follow the instruction printed in the console:
 Your url to authorize your token  will be different so please use the url as printed in your console and do not copy the url in this readme. 
 
 After entering the authorization url in a browser, you will see a login screen where you will be asked to provide your Jama user account credentials to authorize a third-party application to access your OSLC Jama API data on your behalf. 
-<p>
-  <img src="images/authorizationscreen.png"/>
-  
-</p>
 
 You can reuse the Jama user account credentials defined in [config.properties](src/main/resources/config.properties). If your credentials are valid, you should see this message in the browser: *Request authorized*. Then you can access all resources of the OSLC Jama API as if OAuth was disabled. 
 
