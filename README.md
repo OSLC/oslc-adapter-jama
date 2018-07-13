@@ -28,8 +28,8 @@
 - Creation of HTML/JavaScript client to test OSLC UI Preview of requirement resources
 - Support for hosting Jama RDF vocabulary
 - Support for Jama-specific RDF namespace
-
-
+- Support for OAuth (3-legged OAuth v1.0 authentication in the same style as for IBM CLM applications as described by Michael Fiedler in this [video](https://www.youtube.com/watch?v=kcEjftQA-LU)
+- Support for rootservices (in the same style as for IBM Jazz applications)
 
 ### Installation Instructions ###
 
@@ -44,13 +44,29 @@
 - Make sure that the environment variable JAVA\_HOME is pointing to the JDK and not the JRE folder. JAVA\_HOME should be pointing for example to *C:\Program Files\Java\jdk1.8.0_02*. Instructions to set JAVA\_HOME depending of your OS are [here](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t)
 
 
+**Configuration to enable OAuth (optional)**
+
+- Skip this section if you want to launch the adapter without OAuth authentication
+- **Choose to enable OAuth authentication (e.g. isOauthEnabled = true)** in [config.properties](src/main/resources/config.properties) 
+- OSLC Jama API uses its own consumerstore. You can use an existing one by downloading on your machine [jamaOAuthStore.xml](jamaOAuthStore.xml). This consumerstore already contains a consumer named *magicdraw* having *testkey* as key and *testsecret* as secret. The secret is encrypted in *jamaOAuthStore.xml*. 
+- If you prefer to create a new consumerstore with different consumer credentials, you can modify and run [ConsumerStoreCreator.java](src\main\java\com\jama\oslc\web\ConsumerStoreCreator.java) 
+- **Specify the location of the file-based consumerstore as URI** (e.g. *localConsumerStoreLocation = file:/C:/Users/.../git/oslc-adapter-jama2/jamaOAuthStore.xml*) in [config.properties](src/main/resources/config.properties)
+-  By default, the consumerstore used by the OSLC API is located at A Java application can be used to add/remove consumers to the OSLC Jama API consumerstore. 
+-  Keep in mind that the OSLC Jama API uses the credentials of a regular Jama user account to communicate with the Jama REST API. 
+- Download the Wildfly server, for example from [http://download.jboss.org/wildfly/10.1.0.Final/wildfly-10.1.0.Final.zip](http://download.jboss.org/wildfly/10.1.0.Final/wildfly-10.1.0.Final.zip). It will be necessary to host the OSLC Jama API on a standalone Wildfly server, instead of a Wildfly server launched by Maven, in order to avoid this [error](https://stackoverflow.com/questions/25644007/request-io-undertow-servlet-spec-httpservletrequestimpl-was-not-original-or-a-wr). 
+- Unzip the zip file containing Wildfly. 
+- In the standalone/configuration/standalone.xml file change the servlet-container XML element so that it has the attribute *allow-non-standard-wrappers="true"*.
+ 
+
 **Running the Jama OSLC adapter**
 
 - Download this zip file [koneksys-oslc-adapter-jama.zip](https://github.com/OSLC/oslc-adapter-jama/archive/master.zip)
 - Unzip it
 - Open a terminal (command window) and navigate to the root folder containing the *pom.xml* file of the unzipped file 
-- **Set your your Jama subdomain, username and password** in *config.properties* located in the src/main/resources folder
-- Run the adapter with this command `mvn clean install wildfly:run`
+- **Set your your Jama subdomain, username and password** in [config.properties](src/main/resources/config.properties). Keep in mind that the OSLC Jama API uses the credentials of a regular Jama user account to communicate with the Jama REST API. 
+- **Choose to enable or disable OAuth authentication** (e.g. isOauthEnabled = false) in [config.properties](src/main/resources/config.properties) 
+- **If OAuth is disabled**, run the adapter by opening a command prompt, change your directory to the root directory of the Jama OSLC API, the one containing the pom.xml file, and then run this command `mvn clean install wildfly:run`
+- **If OAuth is enabled**, first make sure that you have set up a management user account for Wildfly. You can create one by running the *adduser* script (e.g. by running the *{Wildfly root}/bin/add-user* batch file on Windows), launch the standalone Wildfly server (e.g. by running the *{Wildfly root}/bin/standalone* batch file on Windows), compile the Maven project of the Jama OSLC API  using a command prompt as described in the step before if OAuth is disabled but with this command `mvn clean install`, verify that the war file has been created at *target\jama-oslc-adapter.war*, open in your browser this page [http://localhost:9990/console/App.html#standalone-deployments](http://localhost:9990/console/App.html#standalone-deployments) by signing in with your Wildfly management user account, click the *Add* button and select the *target\jama-oslc-adapter.war* file. Wildly will then host the Jama OSLC API
 - Perform `CTRL+C` to stop the adapter
 
 ### Getting Started ###
@@ -59,6 +75,42 @@ Explore OSLC Jama resources by viewing them in HTML in your browser. Navigate th
 
 ![](http://open-services.net/pub/Main/OSLCCoreSpecDRAFT/oslc-core-overview.png)
 
+
+**If OAuth is enabled**, access the rootservices resource at [http://localhost:8080/jama-oslc-adapter/services/rootservices](http://localhost:8080/jama-oslc-adapter/services/rootservices). If using your browser, you will download a file named *rootservices.rdf*. This document will show the *ServiceProviderCatalog URL*, *oauthRequestTokenUrl*, *oauthUserAuthorizationUrl*, and *oauthAccessTokenUrl*, as shown below. 
+
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <ns1:Description xmlns:ns1="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns2="http://purl.org/dc/terms/" xmlns:ns8="http://open-services.net/xmlns/cm/1.0/" xmlns:ns9="http://jazz.net/xmlns/prod/jazz/jfs/1.0/" xmlns:ns10="http://jazz.net/ns/ui#" xmlns:ns11="http://jazz.net/xmlns/prod/jazz/calm/1.0/" xmlns:ns12="http://xmlns.com/foaf/0.1/" ns1:about="http://localhost:8080/jama-oslc-adapter/services//rootservices">
+    <ns2:title>OSLC Adapter/Jira Root Services</ns2:title>
+    <ns8:cmServiceProviders ns1:resource="http://localhost:8080/jama-oslc-adapter/services//catalog/singleton"/>
+    <ns9:oauthRequestTokenUrl ns1:resource="http://localhost:8080/jama-oslc-adapter/services//oauth/requestToken"/>
+    <ns9:oauthUserAuthorizationUrl ns1:resource="http://localhost:8080/jama-oslc-adapter/services//oauth/authorize"/>
+    <ns9:oauthAccessTokenUrl ns1:resource="http://localhost:8080/jama-oslc-adapter/services//oauth/accessToken"/>
+    <ns9:oauthRealmName>Jama</ns9:oauthRealmName>
+    <ns9:oauthRequestConsumerKeyUrl ns1:resource="http://localhost:8080/jama-oslc-adapter/services//oauth/requestKey"/>
+    </ns1:Description>
+
+Specify in [OAuthClient.java](src\main\java\com\jama\oslc\client\OAuthClient.java) your consumer name, key and secret, as well as oauthRequestTokenUrl, oauthUserAuthorizationUrl, and oauthAccessTokenUrl. Run  [OAuthClient.java](src\main\java\com\jama\oslc\client\OAuthClient.java) to get a requesttoken. The OAuthClient will then print in the console the following message:
+
+    > log4j:WARN No appenders could be found for logger (org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager).
+    > log4j:WARN Please initialize the log4j system properly.
+    > log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+    > Enter this URL in a browser and run again: http://localhost:8080/jama-oslc-adapter/services/oauth/authorize?oauth_token=bfca9c38-78b3-4848-bfb7-694401e5cc96
+    > org.eclipse.lyo.client.oslc.OAuthRedirectException
+    > 	at org.eclipse.lyo.client.oslc.OslcOAuthClient.getResourceInternal(OslcOAuthClient.java:203)
+    > 	at org.eclipse.lyo.client.oslc.OslcOAuthClient.getResource(OslcOAuthClient.java:113)
+    > 	at com.jama.oslc.client.OAuthClient.main(OAuthClient.java:28)
+
+Follow the instruction printed in the console: 
+> Enter this URL in a browser and run again: http://localhost:8080/jama-oslc-adapter/services/oauth/authorize?oauth_token=bfca9c38-78b3-4848-bfb7-694401e5cc96
+> 
+
+Your url to authorize your token  will be different so please use the url as printed in your console and do not copy the url in this readme. 
+
+After entering the authorization url in a browser, you will see a login screen where you will be asked to provide your Jama user account credentials to authorize a third-party application to access your OSLC Jama API data on your behalf. 
+
+![](images/authorizationscreen.png)
+
+You can reuse the Jama user account credentials defined in [config.properties](src/main/resources/config.properties). If your credentials are valid, you should see this message in the browser: *Request authorized*. Then you can access all resources of the OSLC Jama API as if OAuth was disabled. 
 
 Start with the **Service Provider Catalog** resource (entry point resource) at [http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog](http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog). It will show you the Jama projects exposed by the adapter. The ServiceProviderCatalog has links to ServiceProvider resources, one for each Jama project containing an item of type Stakeholder requirement (item type id = 45).
 
