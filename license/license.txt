@@ -1,0 +1,9 @@
+Copyright (c) 2018 Koneksys http://www.koneksys.com
+
+All rights reserved. All files released under the Eclipse Public License v1.0
+and Eclipse Distribution License v. 1.0 have a header referring to these licenses.
+All other files are released under the MIT license.
+
+The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+and the Eclipse Distribution License is available at
+http://www.eclipse.org/org/documents/edl-v10.php.
