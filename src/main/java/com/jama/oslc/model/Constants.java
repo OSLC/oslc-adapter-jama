@@ -18,7 +18,8 @@ import com.jama.oslc.web.AdapterInitializer;
 
 public class Constants {
 	
-	 public static final String CONTEXT = "http://localhost:" + AdapterInitializer.portNumber + "/jama-oslc-adapter/";
+//	 public static final String CONTEXT = "http://localhost:" + AdapterInitializer.portNumber + "/jama-oslc-adapter/";
+	 public static final String CONTEXT = "http://" + AdapterInitializer.domain + ":" + AdapterInitializer.portNumber + "/jama-oslc-adapter/";
 	 public static final String RESOURCES = CONTEXT + "services/";
 	 public static final String VOCABULARY = CONTEXT + "vocabulary/";
 

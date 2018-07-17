@@ -88,6 +88,8 @@ public class AdapterInitializer implements ServletContextListener {
 	static String localConfigFilePath = "config.properties";
 
 	public static String portNumber = null;
+	public static String domain = null;
+	
 	static int delayInSecondsBetweenDataRefresh = 100000;
 
 	public static String jamaInstanceName = null;
@@ -480,7 +482,7 @@ public class AdapterInitializer implements ServletContextListener {
 
 		deletionChangeEvent.setTypes(deletionChangeEventTypes);
 		deletionChangeEvent.setOrder(changeEventID);
-		deletionChangeEvent.setChanged(URI.create("http://localhost:" + portNumber
+		deletionChangeEvent.setChanged(URI.create("http://"+ AdapterInitializer.domain + ":" + portNumber
 				+ "/jama-oslc-adapter/services/Achiever_UAV_Sample_Set/requirement/9008"));
 		changeEvents.add(deletionChangeEvent);
 
@@ -551,6 +553,8 @@ public class AdapterInitializer implements ServletContextListener {
 		String delayInSecondsBetweenDataRefreshFromUser = prop.getProperty("delayInSecondsBetweenDataRefresh");
 		jamaInstanceName = portNumber = prop.getProperty("jamaInstanceName");
 		portNumber = prop.getProperty("portNumber");
+		
+		domain = prop.getProperty("domain");
 
 		username = prop.getProperty("username");
 		password = prop.getProperty("password");
