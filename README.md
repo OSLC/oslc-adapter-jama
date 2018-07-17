@@ -42,8 +42,8 @@
 `mvn --version`
 - Install Java JDK 8 from [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - Make sure that the environment variable JAVA\_HOME is pointing to the JDK and not the JRE folder. JAVA\_HOME should be pointing for example to *C:\Program Files\Java\jdk1.8.0_02*. Instructions to set JAVA\_HOME depending of your OS are [here](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t)
-- If you choose to run the OSLC API on a different port than 8080, change the port in in [config.properties](src/main/resources/config.properties) and in [pom.xml](pom.xml) in `<server.port>8080</server.port>`
-
+- If you choose to run the OSLC API on a different port than *8080*, change the port in [config.properties](src/main/resources/config.properties) and in [pom.xml](pom.xml) in `<server.port>8080</server.port>`
+- If you choose to run the OSLC API on a different domain than *localhost*, change the domain in [config.properties](src/main/resources/config.properties) 
 
 **Configuration to enable OAuth (optional)**
 
