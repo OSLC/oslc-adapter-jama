@@ -36,6 +36,7 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import com.jama.oslc.model.Namespace;
+import com.jama.oslc.web.AdapterInitializer;
 
 @Path(OslcConstants.PATH_SERVICE_PROVIDER)
 public class ServiceProviderResource {
@@ -64,7 +65,7 @@ public class ServiceProviderResource {
 		HttpServletResponse response = ResteasyProviderFactory.getContextData(HttpServletResponse.class);
 
 		ServiceProviderCatalog serviceProviderCatalog = (ServiceProviderCatalog) context.getAttribute("OSLC_CATALOG");
-		String path = Namespace.RESOURCES + OslcConstants.PATH_SERVICE_PROVIDER;
+		String path = "http://" + AdapterInitializer.domain + ":" + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/" + OslcConstants.PATH_SERVICE_PROVIDER;
 		for (ServiceProvider serviceProvider : serviceProviderCatalog.getServiceProviders()) {
 			if (serviceProvider.getAbout().toString().equals(path + "/" + identifier)) {
 				request.setAttribute("serviceProvider", serviceProvider);

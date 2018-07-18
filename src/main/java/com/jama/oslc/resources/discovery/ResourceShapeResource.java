@@ -14,6 +14,8 @@
 package com.jama.oslc.resources.discovery;
 
 import com.jama.oslc.model.Namespace;
+import com.jama.oslc.web.AdapterInitializer;
+
 import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -42,7 +44,7 @@ public class ResourceShapeResource {
         try {
             resourceClass = Class.forName(className);
             shape = ResourceShapeFactory.createResourceShape(
-                    Namespace.RESOURCES.substring(0, Namespace.RESOURCES.length()-1),
+            		"http://" + AdapterInitializer.domain + ":" + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/".substring(0, Namespace.RESOURCES.length()-1),
                     OslcConstants.PATH_RESOURCE_SHAPES,
                     resourceType,
                     resourceClass);
