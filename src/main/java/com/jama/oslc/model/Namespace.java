@@ -25,6 +25,8 @@ import org.eclipse.lyo.oslc4j.core.annotation.OslcPropertyDefinition;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcSchema;
 import org.eclipse.lyo.oslc4j.core.model.PrefixDefinition;
 
+import com.jama.oslc.web.AdapterInitializer;
+
 public interface Namespace {
 
     static Map<String, Method> getResourcePropertiesGetters(Class<?> resourceClass)
@@ -70,7 +72,9 @@ public interface Namespace {
 
     Map<String, String> PREFIXES = getKnownPrefixes(Namespace.class);
     
-    String CONTEXT = "http://localhost:8080/jama-oslc-adapter/";
+//    String CONTEXT = "http://localhost:8080/jama-oslc-adapter/";
+//    final String CONTEXT = "http://" + AdapterInitializer.domain + ":8080/jama-oslc-adapter/";
+    String CONTEXT = "http://" + Constants.domain +":"+ Constants.portNumber +"/jama-oslc-adapter/";
     String RESOURCES = CONTEXT + "services/";
     String VOCABULARY = CONTEXT + "vocabulary/";
     

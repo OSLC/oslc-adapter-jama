@@ -87,8 +87,11 @@ public class AdapterInitializer implements ServletContextListener {
 
 	static String localConfigFilePath = "config.properties";
 
-	public static String portNumber = null;
-	public static String domain = null;
+//	public static String portNumber = null;
+//	public static String domain = null;
+	
+	public static final String portNumber = Constants.portNumber;
+	public static final String domain = Constants.domain;
 	
 	static int delayInSecondsBetweenDataRefresh = 100000;
 
@@ -480,10 +483,9 @@ public class AdapterInitializer implements ServletContextListener {
 		// get the property value
 
 		String delayInSecondsBetweenDataRefreshFromUser = prop.getProperty("delayInSecondsBetweenDataRefresh");
-		jamaInstanceName = portNumber = prop.getProperty("jamaInstanceName");
-		portNumber = prop.getProperty("portNumber");
-		
-		domain = prop.getProperty("domain");
+		jamaInstanceName = prop.getProperty("jamaInstanceName");
+//		portNumber = prop.getProperty("portNumber");
+//		domain = prop.getProperty("domain");
 
 		username = prop.getProperty("username");
 		password = prop.getProperty("password");
