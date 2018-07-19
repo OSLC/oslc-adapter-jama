@@ -65,9 +65,9 @@ public class ServiceProviderResource {
 		HttpServletResponse response = ResteasyProviderFactory.getContextData(HttpServletResponse.class);
 
 		ServiceProviderCatalog serviceProviderCatalog = (ServiceProviderCatalog) context.getAttribute("OSLC_CATALOG");
-		String path = "http://" + AdapterInitializer.domain + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/" + OslcConstants.PATH_SERVICE_PROVIDER;
+		String requestURL = request.getRequestURL().toString();
 		for (ServiceProvider serviceProvider : serviceProviderCatalog.getServiceProviders()) {
-			if (serviceProvider.getAbout().toString().equals(path + "/" + identifier)) {
+			if (serviceProvider.getAbout().toString().equals(requestURL)) {
 				request.setAttribute("serviceProvider", serviceProvider);
 //				System.out.println(serviceProvider.getTitle());
 //				System.out.println(serviceProvider.getServices());
