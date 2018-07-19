@@ -13,6 +13,7 @@
 
 package com.jama.oslc.resources.discovery;
 
+import com.jama.oslc.model.Constants;
 import com.jama.oslc.model.Namespace;
 import com.jama.oslc.web.AdapterInitializer;
 
@@ -44,7 +45,7 @@ public class ResourceShapeResource {
         try {
             resourceClass = Class.forName(className);
             shape = ResourceShapeFactory.createResourceShape(
-            		"http://" + AdapterInitializer.domain + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/".substring(0, Namespace.RESOURCES.length()-1),
+            		Constants.urlScheme + "://" + AdapterInitializer.domain + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/".substring(0, Namespace.RESOURCES.length()-1),
                     OslcConstants.PATH_RESOURCE_SHAPES,
                     resourceType,
                     resourceClass);
