@@ -147,7 +147,7 @@ public class RequirementResource {
 		String nextPage = null;
 		ResponseInfoCollection<Requirement> response;
 		response = new ResponseInfoCollection<>(set, props, total, nextPage);
-		response.setAbout(new URI("http://" + AdapterInitializer.domain + ":" + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/" + "requirement"));
+		response.setAbout(new URI("http://" + AdapterInitializer.domain + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/" + "requirement"));
 		return response;
 	}
 
