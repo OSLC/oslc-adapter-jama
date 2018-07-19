@@ -7,14 +7,7 @@
   <version>1.0-SNAPSHOT</version>
   <name>Jama OSLC Adapter</name>
   <url>http://maven.apache.org</url>
-    <properties>
-        <server.scheme>http</server.scheme>
-        <server.name>127.0.0.1</server.name>
-        <server.port>8080</server.port>
-        <path.context>${project.build.finalName}</path.context>
-        <path.services>oslc</path.services>
-        <path.vocabulary>vocabulary</path.vocabulary>
-    </properties>
+    
   <repositories>
     <repository>
       <id>lyo-releases</id>
