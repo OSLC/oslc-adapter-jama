@@ -173,11 +173,11 @@ If your server comes with a pre-bundled implementation this should work, but if 
               <name>${project.build.finalName}.war</name>
           
           <!-- for debugging -->
-          
+          <!-- 
           <java-opts>
                         <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8787</java-opt>
                     </java-opts>
-          
+          -->
           </configuration>
           
           
