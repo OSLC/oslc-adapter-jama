@@ -6,10 +6,10 @@
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.ServiceProvider" %>
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.Link" %>
 <%@ page import="java.net.URI" %>
-<%@ page import="com.java.oslc.model.trs.TrackedResourceSet" %>
-<%@ page import="com.java.oslc.model.trs.Base" %>
-<%@ page import="com.java.oslc.model.trs.ChangeLog" %>
-<%@ page import="com.java.oslc.model.trs.ChangeEvent" %>
+<%@ page import="com.jama.oslc.model.trs.TrackedResourceSet" %>
+<%@ page import="com.jama.oslc.model.trs.Base" %>
+<%@ page import="com.jama.oslc.model.trs.ChangeLog" %>
+<%@ page import="com.jama.oslc.model.trs.ChangeEvent" %>
 <%@ page import="java.util.Collection" %>
 <%
 
