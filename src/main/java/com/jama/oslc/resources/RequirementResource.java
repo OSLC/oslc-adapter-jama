@@ -105,7 +105,8 @@ public class RequirementResource {
 		HttpServletRequest request = ResteasyProviderFactory.getContextData(HttpServletRequest.class);
 		HttpServletResponse response = ResteasyProviderFactory.getContextData(HttpServletResponse.class);
 		Map<String, Requirement> requirements = (Map<String, Requirement>) context.getAttribute("OSLC_REQUIREMENTS");
-		String requestURL = getURL(request);
+//		String requestURL = getURL(request);
+		String requestURL = request.getRequestURL().toString();
 		Requirement requirementToReturn = requirements.get(requestURL);
 
 		if (requirementToReturn != null) {
@@ -127,7 +128,8 @@ public class RequirementResource {
 	public Response getRDFRequirement(@Context ServletContext context, @PathParam("id") int id)
 			throws URISyntaxException, NoSuchAlgorithmException, UnsupportedEncodingException {
 		HttpServletRequest request = ResteasyProviderFactory.getContextData(HttpServletRequest.class);
-		String requestURL = getURL(request);
+//		String requestURL = request.getURL(request);
+		String requestURL = request.getRequestURL().toString();
 		Map<String, Requirement> requirements = (Map<String, Requirement>) context.getAttribute("OSLC_REQUIREMENTS");
 		Requirement requirementToReturn = requirements.get(requestURL);
 
@@ -318,7 +320,8 @@ public class RequirementResource {
 			@PathParam("projectName") final String projectName)
 			throws URISyntaxException, NoSuchAlgorithmException, UnsupportedEncodingException {
 		HttpServletRequest request = ResteasyProviderFactory.getContextData(HttpServletRequest.class);
-		String requestURL = getURL(request);
+//		String requestURL = getURL(request);
+		String requestURL = request.getRequestURL().toString();
 		Map<String, Requirement> requirements = (Map<String, Requirement>) context.getAttribute("OSLC_REQUIREMENTS");
 		Requirement requirementToReturn = requirements.get(requestURL);
 
@@ -369,7 +372,8 @@ public class RequirementResource {
 			throws ServletException, IOException, URISyntaxException {
 		HttpServletResponse response = ResteasyProviderFactory.getContextData(HttpServletResponse.class);
 		HttpServletRequest request = ResteasyProviderFactory.getContextData(HttpServletRequest.class);
-		String requestURL = getURL(request).replace("/smallPreview", "");
+//		String requestURL = getURL(request).replace("/smallPreview", "");
+		String requestURL = request.getRequestURL().toString().replace("/smallPreview", "");
 		Map<String, Requirement> requirements = (Map<String, Requirement>) context.getAttribute("OSLC_REQUIREMENTS");
 		Requirement requirementToReturn = requirements.get(requestURL);
 		if (requirementToReturn != null) {
@@ -406,7 +410,8 @@ public class RequirementResource {
 			throws ServletException, IOException, URISyntaxException {
 		HttpServletResponse response = ResteasyProviderFactory.getContextData(HttpServletResponse.class);
 		HttpServletRequest request = ResteasyProviderFactory.getContextData(HttpServletRequest.class);
-		String requestURL = getURL(request);
+//		String requestURL = getURL(request);
+		String requestURL = request.getRequestURL().toString();
 		Map<String, Requirement> requirements = (Map<String, Requirement>) context.getAttribute("OSLC_REQUIREMENTS");
 		Requirement requirementToReturn = requirements.get(requestURL);
 		if (requirementToReturn != null) {
@@ -596,34 +601,34 @@ public class RequirementResource {
 		return builder.build();
 	}
 
-	public static String getURL(HttpServletRequest req) {
-
-		String scheme = req.getScheme(); // http
-		String serverName = req.getServerName(); // hostname.com
-		int serverPort = req.getServerPort(); // 80
-		String contextPath = req.getContextPath(); // /mywebapp
-		String servletPath = req.getServletPath(); // /servlet/MyServlet
-		String pathInfo = req.getPathInfo(); // /a/b;c=123
-		String queryString = req.getQueryString(); // d=789
-
-		// Reconstruct original requesting URL
-		StringBuilder url = new StringBuilder();
-		url.append(scheme).append("://").append(serverName);
-
-		if (serverPort != 80 && serverPort != 443) {
-			url.append(":").append(serverPort);
-		}
-
-		url.append(contextPath).append(servletPath);
-
-		if (pathInfo != null) {
-			url.append(pathInfo);
-		}
-		if (queryString != null) {
-			url.append("?").append(queryString);
-		}
-		return url.toString();
-	}
+//	public static String getURL(HttpServletRequest req) {
+//
+//		String scheme = req.getScheme(); // http
+//		String serverName = req.getServerName(); // hostname.com
+//		int serverPort = req.getServerPort(); // 80
+//		String contextPath = req.getContextPath(); // /mywebapp
+//		String servletPath = req.getServletPath(); // /servlet/MyServlet
+//		String pathInfo = req.getPathInfo(); // /a/b;c=123
+//		String queryString = req.getQueryString(); // d=789
+//
+//		// Reconstruct original requesting URL
+//		StringBuilder url = new StringBuilder();
+//		url.append(scheme).append("://").append(serverName);
+//
+//		if (serverPort != 80 && serverPort != 443) {
+//			url.append(":").append(serverPort);
+//		}
+//
+//		url.append(contextPath).append(servletPath);
+//
+//		if (pathInfo != null) {
+//			url.append(pathInfo);
+//		}
+//		if (queryString != null) {
+//			url.append("?").append(queryString);
+//		}
+//		return url.toString();
+//	}
 	
 	public String getElementQualifiedName(URI uri){
 		String[] names = uri.getPath().split("/");
