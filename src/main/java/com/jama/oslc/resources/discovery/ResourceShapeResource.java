@@ -44,7 +44,7 @@ public class ResourceShapeResource {
         try {
             resourceClass = Class.forName(className);
             shape = ResourceShapeFactory.createResourceShape(
-            		"http://" + AdapterInitializer.domain + ":" + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/".substring(0, Namespace.RESOURCES.length()-1),
+            		"http://" + AdapterInitializer.domain + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/".substring(0, Namespace.RESOURCES.length()-1),
                     OslcConstants.PATH_RESOURCE_SHAPES,
                     resourceType,
                     resourceClass);
