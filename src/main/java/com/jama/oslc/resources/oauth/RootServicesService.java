@@ -68,7 +68,7 @@ public class RootServicesService {
       builder.append("xmlns:ns12=\"http://xmlns.com/foaf/0.1/\" ");
       builder.append("ns1:about=\"" + jamaServiceBase + "/rootservices\">\n");
       builder.append("    <ns2:title>OSLC Adapter/Jama Root Services</ns2:title>\n");
-      builder.append("    <ns8:cmServiceProviders ns1:resource=\"" + jamaServiceBase + "catalog/singleton\"/>\n");
+      builder.append("    <ns8:cmServiceProviders ns1:resource=\"" + jamaServiceBase + "serviceProviderCatalog\"/>\n");
       builder.append("    <ns9:oauthRequestTokenUrl ns1:resource=\"" + jamaServiceBase + "oauth/requestToken\"/>\n");
       builder.append("    <ns9:oauthUserAuthorizationUrl ns1:resource=\"" + jamaServiceBase + "oauth/authorize\"/>\n");
       builder.append("    <ns9:oauthAccessTokenUrl ns1:resource=\"" + jamaServiceBase + "oauth/accessToken\"/>\n");
