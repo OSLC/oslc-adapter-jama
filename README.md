@@ -1,6 +1,8 @@
 ## Jama OSLC API ##
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OSLC/chat)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Discourse status](https://img.shields.io/discourse/https/meta.discourse.org/status.svg)](https://forum.open-services.net/)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OSLC/chat)
 
 <a title="By Jama Software (crunchbase) [Public domain], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File%3AJama-Logo.png"><img width="100" height="100" alt="Jama-Logo" src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Jama-Logo.png" /></a>
 <pre>     </pre>
