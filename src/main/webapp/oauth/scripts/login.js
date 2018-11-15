@@ -33,7 +33,10 @@ require([ "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/_base/event",
 			window.location = callback;
 		} else {
 			dom.byId('content').innerHTML =
-				'<div class="message">Request authorized. Close the browser window to continue.</div>';
+				'<div class="message">Request authorized. Close the browser window to continue. </br></br>' +
+				'Please use the following cookie to access requests using Postman and cURL requests: </br></div>';
+			var x = document.getElementById("cookie");
+			x.style.display = "block";
 		}
 	}
 	
