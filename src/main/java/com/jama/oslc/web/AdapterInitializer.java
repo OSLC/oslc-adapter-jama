@@ -414,7 +414,7 @@ public class AdapterInitializer implements ServletContextListener {
 
 		deletionChangeEvent.setTypes(deletionChangeEventTypes);
 		deletionChangeEvent.setOrder(changeEventID);
-		deletionChangeEvent.setChanged(URI.create(Constants.urlScheme + "://"+ AdapterInitializer.domain + ":" + portNumber
+		deletionChangeEvent.setChanged(URI.create(Constants.urlScheme + "://"+ AdapterInitializer.domain + portNumber
 				+ "/jama-oslc-adapter/services/Achiever_UAV_Sample_Set/requirement/9008"));
 		changeEvents.add(deletionChangeEvent);
 
