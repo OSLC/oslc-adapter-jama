@@ -122,10 +122,33 @@ Click on an individual Jama Requirement **resource** (e.g. [http://localhost:808
 
 Access this [web page](http://localhost:8080/jama-oslc-adapter/uipreview) hosted by the OSLC API to test the OSLC UI Preview. Hover over the link to a Jama requirement to see a UI preview window pop up. The UI Preview window can contain custom information and be formatted in various ways. The window size (height, width, and small vs large preview) information is defined according to the OSLC standard.
 
+### Setting the OAuth cookie in Postman ###
+
+In order to access RDF resources from this API with OAuth enabled, you need to send your OAuth cookie together with the request. This cookie is printed after authenticating your username and password.
+
+<img height="70" src="images/oauth-cookie.PNG" />
+
+In postman, click on the cookie link as shown below.
+
+<img height="100" src="images/cookie-edit.png" />
+
+Now find the domain in which the Jama API is running and click on the JSESSIONID cookie. If the domain has various JSESSIONID cookies, find the one that shows `path=/jama-oslc-adapter`
+
+<img height="200" src="images/cookie-value.png" />
+
+After finding the right cookie, please copy the JSESSIONID value shown in the authentication page and replace it in postman.
+
+After saving the cookie, you should be able to access the RDF resources normally.
+
 ### Testing the OSLC API manually using curl or a REST client ###
 
 - Install curl (Instructions for Windows can be found [here](http://www.oracle.com/webfolder/technetwork/tutorials/obe/cloud/13_2/messagingservice/files/installing_curl_command_line_tool_on_windows.html))
 - Run following curl commands in the command window, or equivalent commands in your REST client (e.g. [Postman](https://www.getpostman.com/)), to get the RDF representation of resources exposed by the OSLC API
+- If OAuth is enabled, please add your OAuth cookie as a parameter to the curl request
+
+*curl with cookie example*
+
+`curl -H Accept:application/rdf+xml --cookie "JSESSIONID=idx5iZsA8zaRIbZYvrQJ6SNFbqrJ9fph8Lb5fTOk.desktop-ia0coj8" http://localhost:8080/jama-oslc-adapter/services/serviceProviderCatalog`
  
 *Service Provider Catalog*
 
