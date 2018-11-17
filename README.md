@@ -130,11 +130,11 @@ In order to access RDF resources from this API with OAuth enabled, you need to s
 
 In postman, click on the cookie link as shown below.
 
-<img height="100" src="images/cookie-edit.png" />
+<img height="100" src="images/cookie-edit.PNG" />
 
 Now find the domain in which the Jama API is running and click on the JSESSIONID cookie. If the domain has various JSESSIONID cookies, find the one that shows `path=/jama-oslc-adapter`
 
-<img height="200" src="images/cookie-value.png" />
+<img height="200" src="images/cookie-value.PNG" />
 
 After finding the right cookie, please copy the JSESSIONID value shown in the authentication page and replace it in postman.
 
