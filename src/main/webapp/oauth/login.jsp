@@ -82,7 +82,7 @@
 			</div>
 		</form>
 	</div>
-	<label id="cookie" style="display:none; text-align:left">JSESSIONID=<c:out value="${cookie.JSESSIONID.value}"></c:out></label>
+	<label id="cookie" style="display:none; text-align:left"></label>
 </body>
 
 </html>

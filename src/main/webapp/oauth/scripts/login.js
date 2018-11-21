@@ -36,6 +36,7 @@ require([ "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/_base/event",
 				'<div class="message">Request authorized. Close the browser window to continue. </br></br>' +
 				'Please use the following cookie to access requests using Postman and cURL requests: </br></div>';
 			var x = document.getElementById("cookie");
+			x.innerHTML = "JSESSIONID=" + getCookie("JSESSIONID");
 			x.style.display = "block";
 		}
 	}
@@ -59,6 +60,22 @@ require([ "dojo/dom", "dojo/dom-construct", "dojo/on", "dojo/_base/event",
 	function cancel() {
 		dom.byId('content').innerHTML =
 			'<div class="message">Access denied. Close the browser window to continue.</div>';
+	}
+	
+	function getCookie(cname) {
+	    var name = cname + "=";
+	    var decodedCookie = decodeURIComponent(document.cookie);
+	    var ca = decodedCookie.split(';');
+	    for(var i = 0; i <ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	            c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	            return c.substring(name.length, c.length);
+	        }
+	    }
+	    return "";
 	}
 
 	ready(function() {
