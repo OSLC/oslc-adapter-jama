@@ -76,6 +76,6 @@ public interface Namespace {
 //    final String CONTEXT = "http://" + AdapterInitializer.domain + ":8080/jama-oslc-adapter/";
     String CONTEXT = Constants.urlScheme + "://" + Constants.domain + Constants.portNumber +"/jama-oslc-adapter/";
     String RESOURCES = CONTEXT + "services/";
-    String VOCABULARY = CONTEXT + "vocabulary/";
+    String VOCABULARY = RESOURCES + "vocabulary/";
     
 }
