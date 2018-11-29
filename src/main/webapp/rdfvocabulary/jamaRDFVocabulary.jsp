@@ -8,6 +8,8 @@
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.Link"%>
 <%@ page import="java.net.URI"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+
 <%
 String requestURL = (String)request.getAttribute("requestURL");
 %>
@@ -52,28 +54,27 @@ String requestURL = (String)request.getAttribute("requestURL");
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xmlns:dcterms="http://purl.org/dc/terms/"
-	xmlns:jama="http://localhost:8080/jama-oslc-adapter/vocabulary/">
+	xmlns:jama="${OSLC_VOCAB}">
 	<rdfs:Class rdf:about="jama:Requirement">
 		<rdfs:label xml:lang="en-GB">Requirement</rdfs:label>
-		<rdfs:isDefinedBy rdf:resource="http://localhost:8080/jama-oslc-adapter/vocabulary/"/>
+		<rdfs:isDefinedBy rdf:resource="${OSLC_VOCAB}"/>
 		<dcterms:issued>2018-01-01</dcterms:issued>
 	</rdfs:Class>
 	<rdf:Property rdf:about="jama:requirement_documentKey">
 		<rdfs:label xml:lang="en-GB">DocumentKey</rdfs:label>
-		<rdfs:isDefinedBy rdf:resource="http://localhost:8080/jama-oslc-adapter/vocabulary/"/>
+		<rdfs:isDefinedBy rdf:resource="${OSLC_VOCAB}"/>
 		<dcterms:issued>2018-01-01</dcterms:issued>
 	</rdf:Property>
 	<rdf:Property rdf:about="jama:requirement_globalId">
 		<rdfs:label xml:lang="en-GB">GlobalId</rdfs:label>
-		<rdfs:isDefinedBy rdf:resource="http://localhost:8080/jama-oslc-adapter/vocabulary/"/>
+		<rdfs:isDefinedBy rdf:resource="${OSLC_VOCAB}"/>
 		<dcterms:issued>2018-01-01</dcterms:issued>
 	</rdf:Property>
 	<rdf:Property rdf:about="jama:requirement_project">
 		<rdfs:label xml:lang="en-GB">Project</rdfs:label>
-		<rdfs:isDefinedBy rdf:resource="http://localhost:8080/jama-oslc-adapter/vocabulary/"/>
+		<rdfs:isDefinedBy rdf:resource="${OSLC_VOCAB}"/>
 		<dcterms:issued>2018-01-01</dcterms:issued>
 	</rdf:Property>
-	
 </rdf:RDF>
 </xmp>
 		

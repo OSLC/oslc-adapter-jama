@@ -24,6 +24,6 @@ public class Constants {
 
 	 public static final String CONTEXT = urlScheme +"://" + domain + portNumber + "/jama-oslc-adapter/";
 	 public static final String RESOURCES = CONTEXT + "services/";
-	 public static final String VOCABULARY = CONTEXT + "vocabulary/";
+	 public static final String VOCABULARY = RESOURCES + "vocabulary/";
 
 }
