@@ -38,23 +38,23 @@ public class ResourceShapeResource {
 	@Path("{resourceType}")
 	@Produces({OslcMediaType.APPLICATION_RDF_XML})
 	public Response getResourceShape(@PathParam("resourceType") String resourceType) {
-        ResourceShape shape;
-        Class<?> resourceClass;
-        Response.ResponseBuilder builder;
+		ResourceShape shape;
+		Class<?> resourceClass;
+		Response.ResponseBuilder builder;
 		String className = "com.jama.oslc.model." + resourceType;
-        try {
-            resourceClass = Class.forName(className);
-            shape = ResourceShapeFactory.createResourceShape(
-            		Constants.urlScheme + "://" + AdapterInitializer.domain + AdapterInitializer.portNumber + "/jama-oslc-adapter/"+ "services/".substring(0, Namespace.RESOURCES.length()-1),
-                    OslcConstants.PATH_RESOURCE_SHAPES,
-                    resourceType,
-                    resourceClass);
-            builder = Response.ok(shape);
-        } catch (ClassNotFoundException ex) {
-            builder = Response.status(HttpServletResponse.SC_NOT_FOUND);
-        } catch (OslcCoreApplicationException | URISyntaxException ex) {
-            builder = Response.serverError();
-        }
+		try {
+			resourceClass = Class.forName(className);
+			shape = ResourceShapeFactory.createResourceShape(
+					Namespace.RESOURCES.substring(0, Namespace.RESOURCES.length()-1),
+					OslcConstants.PATH_RESOURCE_SHAPES,
+					resourceType,
+					resourceClass);
+			builder = Response.ok(shape);
+		} catch (ClassNotFoundException ex) {
+			builder = Response.status(HttpServletResponse.SC_NOT_FOUND);
+		} catch (OslcCoreApplicationException | URISyntaxException ex) {			
+			builder = Response.serverError();
+		}
 		return builder.build();
 	}
 
