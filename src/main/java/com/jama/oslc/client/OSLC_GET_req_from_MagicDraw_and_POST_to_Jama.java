@@ -25,13 +25,13 @@ import javax.ws.rs.client.WebTarget;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.provider.jena.JenaModelHelper;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
 import com.jama.oslc.model.Requirement;
 import com.magicdraw.oslc.resources.SysMLRequirement;
 
