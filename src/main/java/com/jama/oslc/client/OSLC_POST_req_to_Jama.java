@@ -20,10 +20,10 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 
-import org.apache.jena.rdf.model.Model;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.provider.jena.JenaModelHelper;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.jama.oslc.model.Requirement;
 
 public class OSLC_POST_req_to_Jama {
