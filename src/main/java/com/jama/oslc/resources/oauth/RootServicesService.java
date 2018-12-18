@@ -73,7 +73,7 @@ public class RootServicesService {
       builder.append("    <ns9:oauthUserAuthorizationUrl ns1:resource=\"" + jamaServiceBase + "oauth/authorize\"/>\n");
       builder.append("    <ns9:oauthAccessTokenUrl ns1:resource=\"" + jamaServiceBase + "oauth/accessToken\"/>\n");
       builder.append("    <ns9:oauthRealmName>Jama</ns9:oauthRealmName>\n");
-//      builder.append("    <ns9:oauthDomain>" + ComponentAccessor.getApplicationProperties().getString(APKeys.JIRA_BASEURL) + "/</ns9:oauthDomain>\n");
+      builder.append("    <ns9:oauthDomain>" + jamaServiceBase + "</ns9:oauthDomain>\n");
       builder.append("    <ns9:oauthRequestConsumerKeyUrl ns1:resource=\"" + jamaServiceBase + "oauth/requestKey\"/>\n");
       builder.append("</ns1:Description>");
       

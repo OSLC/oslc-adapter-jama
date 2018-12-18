@@ -40,7 +40,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 public class ServiceProviderCatalogResource {
 
     @GET
-    @Produces({OslcMediaType.APPLICATION_RDF_XML})
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML})
     public ServiceProviderCatalog getServiceProviderCatalog(@Context ServletContext context) {
         return (ServiceProviderCatalog) context.getAttribute("OSLC_CATALOG");
     }
