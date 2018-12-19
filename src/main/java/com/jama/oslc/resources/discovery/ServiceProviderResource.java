@@ -13,8 +13,6 @@
 
 package com.jama.oslc.resources.discovery;
 
-import java.util.Iterator;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,17 +25,16 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.lyo.oslc4j.core.annotation.OslcService;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
-import org.eclipse.lyo.oslc4j.core.model.QueryCapability;
-import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
-import com.jama.oslc.model.Namespace;
-import com.jama.oslc.web.AdapterInitializer;
+import com.magicdraw.oslc.resources.Constants;
 
+@OslcService(Constants.CHANGE_MANAGEMENT_DOMAIN)
 @Path(OslcConstants.PATH_SERVICE_PROVIDER)
 public class ServiceProviderResource {
 

@@ -192,9 +192,7 @@ public class AdapterInitializer implements ServletContextListener {
 								fieldsJSONObject.getString("name"), catalog.getPublisher(), myServices, parameterMap);
 						provider.setPrefixDefinitions(Namespace.getKnownPrefixDefinitions(Namespace.class));
 						
-						for (Service s : provider.getServices()) {
-							s.setDomain(new URI("http://open-services.net/xmlns/cm/1.0/"));
-						}
+						catalog.addDomains(getProviderDomains(provider));
 						
 						// vocabulary URI cannot end in #
 						// else exception because a URI is being created based

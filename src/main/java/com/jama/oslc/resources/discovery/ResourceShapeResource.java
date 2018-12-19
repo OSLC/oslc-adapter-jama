@@ -13,24 +13,25 @@
 
 package com.jama.oslc.resources.discovery;
 
-import com.jama.oslc.model.Constants;
-import com.jama.oslc.model.Namespace;
-import com.jama.oslc.web.AdapterInitializer;
-
 import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 
+import org.eclipse.lyo.oslc4j.core.annotation.OslcService;
+import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
+import com.jama.oslc.model.Namespace;
+
+@OslcService(com.magicdraw.oslc.resources.Constants.CHANGE_MANAGEMENT_DOMAIN)
 @Path(OslcConstants.PATH_RESOURCE_SHAPES)
 public class ResourceShapeResource {
 

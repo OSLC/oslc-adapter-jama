@@ -38,13 +38,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import com.jama.oslc.model.Constants;
 import com.jama.oslc.model.Namespace;
 import com.jama.oslc.model.Requirement;
 import com.jama.oslc.web.AdapterInitializer;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONException;
@@ -65,9 +65,13 @@ import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
+@OslcService(com.magicdraw.oslc.resources.Constants.CHANGE_MANAGEMENT_DOMAIN)
 @Path("{projectName}/requirement")
-@OslcService("http://jamacloud.com/#requirementSpec")
+//@OslcService("http://jamacloud.com/#requirementSpec")
 public class RequirementResource {
+	
+	private HttpServletRequest httpServletRequest = ResteasyProviderFactory.getContextData(HttpServletRequest.class);
+	private HttpServletResponse httpServletResponse = ResteasyProviderFactory.getContextData(HttpServletResponse.class);
 
 	@GET
 	@Produces(value = { MediaType.TEXT_HTML })
@@ -635,4 +639,89 @@ public class RequirementResource {
 	    String last_name = names[names.length - 1]; 	    	
 	    return last_name; 
 	}
+	
+	//Dialog Redirects
+	
+	@OslcDialog(title = "Resource Creation Dialog", label = "ResCreaDialog", uri = "/{projectName}/requirement/creator", hintWidth = "500px", hintHeight = "300px", resourceTypes = {
+			Requirement.TYPE_URI }, usages = {})
+	@GET
+	@Path("/creator")
+	@Produces({ MediaType.TEXT_HTML })
+	public void RequirementCreator()
+			throws IOException, ServletException {
+
+		RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/dialogs/add.jsp");
+		rd.forward(httpServletRequest, httpServletResponse);
+	}
+
+	@OslcDialog(title = "Resource Selection Dialog", label = "ResSelDialog", uri = "/{projectName}/requirement/selector", hintWidth = "500px", hintHeight = "300px", resourceTypes = {
+			Requirement.TYPE_URI }, usages = {})
+	@GET
+	@Path("/selector")
+	@Produces({ MediaType.TEXT_HTML })
+	public void RequirementSelector()
+			throws IOException, ServletException {
+
+		RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/dialogs/search.jsp");
+		rd.forward(httpServletRequest, httpServletResponse);
+	}
+
+	@GET
+	@Path("/{param}")
+	@Produces({ OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML })
+	public Compact getActorCompact(@Context ServletContext context, @PathParam("projectName") final String proj,
+			@PathParam("param") final String id) throws ServletException, IOException, URISyntaxException {
+		String iconUri = Namespace.CONTEXT + "dialogs/oslcLg.png";
+		String smallPreviewHintHeight = "10em";
+		String smallPreviewHintWidth = "45em";
+		String largePreviewHintHeight = "20em";
+		String largePreviewHintWidth = "45em";
+
+		Map<URI, Requirement> requirements = (Map<URI, Requirement>) context.getAttribute("OSLC_REQUIREMENETS");
+
+		URI uri = new java.net.URI(Namespace.RESOURCES + proj + "/requirement/" + id);
+		Requirement requirement = requirements.get(uri);
+
+		if (requirement != null) {
+			final Compact compact = new Compact();
+
+			compact.setAbout(requirement.getAbout());
+			compact.setTitle(requirement.toString());
+
+			compact.setIcon(new URI(iconUri));
+
+			// Create and set attributes for OSLC preview resource
+			final Preview smallPreview = new Preview();
+			smallPreview.setHintHeight(smallPreviewHintHeight);
+			smallPreview.setHintWidth(smallPreviewHintWidth);
+			smallPreview.setDocument(UriBuilder.fromUri(requirement.getAbout()).path("smallPreview").build());
+			compact.setSmallPreview(smallPreview);
+
+			// Use the HTML representation of a change request as the large preview as well
+			final Preview largePreview = new Preview();
+			largePreview.setHintHeight(largePreviewHintHeight);
+			largePreview.setHintWidth(largePreviewHintWidth);
+			largePreview.setDocument(requirement.getAbout());
+			compact.setLargePreview(largePreview);
+			httpServletResponse.addHeader("OSLC-Core-Version", "2.0");
+			return compact;
+		}
+		throw new WebApplicationException(Status.NOT_FOUND);
+	}
+
+	/*@GET
+	@Path("/{param}/smallPreview")
+	@Produces({ MediaType.TEXT_HTML })
+	public void ActorSmallPreview(@PathParam("projectName") final String proj, @PathParam("param") String id,
+			@Context ServletContext context) throws IOException, ServletException {
+
+		context.setAttribute("project", proj);
+		context.setAttribute("resourceUri", Namespace.RESOURCES + proj + "/requirement/" + id);
+		context.setAttribute("requirementId", id);
+
+		RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/dialogs/sp.jsp");
+		rd.forward(httpServletRequest, httpServletResponse);
+	}*/
+	
+	
 }
