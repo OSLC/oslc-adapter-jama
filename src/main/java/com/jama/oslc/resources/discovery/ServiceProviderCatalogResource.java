@@ -46,6 +46,12 @@ public class ServiceProviderCatalogResource {
     }
     
     @GET
+    @Produces({OslcMediaType.APPLICATION_XML})
+    public ServiceProviderCatalog getServiceProviderCatalog2(@Context ServletContext context) {
+        return (ServiceProviderCatalog) context.getAttribute("OSLC_CATALOG");
+    }
+    
+    @GET
     @Produces(value = {MediaType.TEXT_HTML})
     public void renderResource(@Context ServletContext context, @QueryParam("oslc.where") String where,
                                @QueryParam("oslc.select") String select) {
