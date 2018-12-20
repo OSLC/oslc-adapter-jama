@@ -58,24 +58,34 @@ public class RootServicesService {
       StringBuilder builder = new StringBuilder();
 
       builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-      builder.append("<ns1:Description ");
-      builder.append("xmlns:ns1=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" ");
-      builder.append("xmlns:ns2=\"http://purl.org/dc/terms/\" ");
-      builder.append("xmlns:ns8=\"http://open-services.net/xmlns/cm/1.0/\" ");
-      builder.append("xmlns:ns9=\"http://jazz.net/xmlns/prod/jazz/jfs/1.0/\" ");
-      builder.append("xmlns:ns10=\"http://jazz.net/ns/ui#\" ");
-      builder.append("xmlns:ns11=\"http://jazz.net/xmlns/prod/jazz/calm/1.0/\" ");
-      builder.append("xmlns:ns12=\"http://xmlns.com/foaf/0.1/\" ");
-      builder.append("ns1:about=\"" + jamaServiceBase + "/rootservices\">\n");
-      builder.append("    <ns2:title>OSLC Adapter/Jama Root Services</ns2:title>\n");
-      builder.append("    <ns8:cmServiceProviders ns1:resource=\"" + jamaServiceBase + "serviceProviderCatalog\"/>\n");
-      builder.append("    <ns9:oauthRequestTokenUrl ns1:resource=\"" + jamaServiceBase + "oauth/requestToken\"/>\n");
-      builder.append("    <ns9:oauthUserAuthorizationUrl ns1:resource=\"" + jamaServiceBase + "oauth/authorize\"/>\n");
-      builder.append("    <ns9:oauthAccessTokenUrl ns1:resource=\"" + jamaServiceBase + "oauth/accessToken\"/>\n");
-      builder.append("    <ns9:oauthRealmName>Jama</ns9:oauthRealmName>\n");
-//      builder.append("    <ns9:oauthDomain>" + ComponentAccessor.getApplicationProperties().getString(APKeys.JIRA_BASEURL) + "/</ns9:oauthDomain>\n");
-      builder.append("    <ns9:oauthRequestConsumerKeyUrl ns1:resource=\"" + jamaServiceBase + "oauth/requestKey\"/>\n");
-      builder.append("</ns1:Description>");
+      builder.append("<rdf:Description rdf:about=\"" + jamaServiceBase + "rootservices\"/>\\n");
+      builder.append("xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" ");
+      builder.append("xmlns:dc=\"http://purl.org/dc/terms/\" ");
+      builder.append("xmlns:oslc_cm=\"http://open-services.net/xmlns/cm/1.0/\" ");
+      builder.append("xmlns:oslc_rm=\"http://open-services.net/xmlns/rm/1.0/\" ");
+      builder.append("xmlns:oslc_am=\"http://open-services.net/ns/am#/\" ");
+      builder.append("xmlns:jfs=\"http://jazz.net/xmlns/prod/jazz/jfs/1.0/\" ");
+
+
+
+      
+      builder.append("    <dc:title>Jama OSLC Adapter Root Services</dc:title>\n");
+      builder.append("    <oslc_cm:cmServiceProviders rdf:resource=\"" + jamaServiceBase + "serviceProviderCatalog\"/>\n");
+      builder.append("    <oslc_rm:cmServiceProviders rdf:resource=\"" + jamaServiceBase + "serviceProviderCatalog\"/>\n");
+      builder.append("    <oslc_am:cmServiceProviders rdf:resource=\"" + jamaServiceBase + "serviceProviderCatalog\"/>\n");
+      builder.append("    <jfs:oauthRequestTokenUrl rdf:resource=\"" + jamaServiceBase + "oauth/requestToken\"/>\n");
+      builder.append("    <jfs:oauthUserAuthorizationUrl rdf:resource=\"" + jamaServiceBase + "oauth/authorize\"/>\n");
+      builder.append("    <jfs:oauthAccessTokenUrl rdf:resource=\"" + jamaServiceBase + "oauth/accessToken\"/>\n");
+      builder.append("    <jfs:oauthRealmName>Jama</jfs:oauthRealmName>\n");
+      builder.append("    <jfs:oauthDomain>" + jamaServiceBase + "/</jfs:oauthDomain>\n");
+      
+      
+      
+      
+      
+      builder.append("    <jfs:oauthRequestConsumerKeyUrl rdf:resource=\"" + jamaServiceBase + "oauth/requestKey\"/>\n");
+      builder.append("    <jfs:oauthApprovalModuleUrl rdf:resource=\"" + jamaServiceBase + "oauth/approveKey\"/>\n");
+      builder.append("</rdf:Description>");
       
       String responseBody = builder.toString();
       
