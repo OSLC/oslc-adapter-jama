@@ -58,16 +58,14 @@ public class RootServicesService {
       StringBuilder builder = new StringBuilder();
 
       builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-      builder.append("<rdf:Description rdf:about=\"" + jamaServiceBase + "rootservices\"/>\\n");
+      builder.append("<rdf:Description \n");
       builder.append("xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" ");
       builder.append("xmlns:dc=\"http://purl.org/dc/terms/\" ");
       builder.append("xmlns:oslc_cm=\"http://open-services.net/xmlns/cm/1.0/\" ");
       builder.append("xmlns:oslc_rm=\"http://open-services.net/xmlns/rm/1.0/\" ");
       builder.append("xmlns:oslc_am=\"http://open-services.net/ns/am#/\" ");
       builder.append("xmlns:jfs=\"http://jazz.net/xmlns/prod/jazz/jfs/1.0/\" ");
-
-
-
+      builder.append(" rdf:about=\"" + jamaServiceBase + "rootservices\">\n");
       
       builder.append("    <dc:title>Jama OSLC Adapter Root Services</dc:title>\n");
       builder.append("    <oslc_cm:cmServiceProviders rdf:resource=\"" + jamaServiceBase + "serviceProviderCatalog\"/>\n");
@@ -78,11 +76,7 @@ public class RootServicesService {
       builder.append("    <jfs:oauthAccessTokenUrl rdf:resource=\"" + jamaServiceBase + "oauth/accessToken\"/>\n");
       builder.append("    <jfs:oauthRealmName>Jama</jfs:oauthRealmName>\n");
       builder.append("    <jfs:oauthDomain>" + jamaServiceBase + "/</jfs:oauthDomain>\n");
-      
-      
-      
-      
-      
+
       builder.append("    <jfs:oauthRequestConsumerKeyUrl rdf:resource=\"" + jamaServiceBase + "oauth/requestKey\"/>\n");
       builder.append("    <jfs:oauthApprovalModuleUrl rdf:resource=\"" + jamaServiceBase + "oauth/approveKey\"/>\n");
       builder.append("</rdf:Description>");

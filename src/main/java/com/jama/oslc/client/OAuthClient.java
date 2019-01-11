@@ -7,9 +7,6 @@ import org.apache.wink.client.ClientResponse;
 import org.eclipse.lyo.client.oslc.OSLCConstants;
 import org.eclipse.lyo.client.oslc.OslcOAuthClient;
 
-import com.jama.oslc.model.Constants;
-import com.jama.oslc.web.AdapterInitializer;
-
 import net.oauth.OAuthException;
 
 public class OAuthClient {

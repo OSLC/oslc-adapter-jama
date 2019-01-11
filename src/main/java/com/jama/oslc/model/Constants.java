@@ -14,8 +14,6 @@
 
 package com.jama.oslc.model;
 
-import com.jama.oslc.web.AdapterInitializer;
-
 public class Constants {
 	
 	public static final String domain = "localhost";
