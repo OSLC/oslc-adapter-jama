@@ -13,8 +13,6 @@
 
 package com.jama.oslc.resources.discovery;
 
-import java.util.Collection;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,14 +38,8 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 public class ServiceProviderCatalogResource {
 
     @GET
-    @Produces({OslcMediaType.APPLICATION_RDF_XML})
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML})
     public ServiceProviderCatalog getServiceProviderCatalog(@Context ServletContext context) {
-        return (ServiceProviderCatalog) context.getAttribute("OSLC_CATALOG");
-    }
-    
-    @GET
-    @Produces({OslcMediaType.APPLICATION_XML})
-    public ServiceProviderCatalog getServiceProviderCatalog2(@Context ServletContext context) {
         return (ServiceProviderCatalog) context.getAttribute("OSLC_CATALOG");
     }
     

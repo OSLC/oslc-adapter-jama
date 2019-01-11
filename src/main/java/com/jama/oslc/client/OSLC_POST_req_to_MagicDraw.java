@@ -12,45 +12,23 @@
  * */
 package com.jama.oslc.client;
 
-import java.io.InputStream;
 import java.io.StringWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.xml.datatype.DatatypeConfigurationException;
-import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
-import org.eclipse.lyo.oslc4j.core.model.CreationFactory;
-import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
-import org.eclipse.lyo.oslc4j.core.model.QueryCapability;
-import org.eclipse.lyo.oslc4j.core.model.Service;
-import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
-import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
-import org.eclipse.lyo.oslc4j.provider.jena.JenaModelHelper;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.ResIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.magicdraw.oslc.resources.SysMLRequirement;
 
+import org.apache.jena.rdf.model.Model;
+import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
+import org.eclipse.lyo.oslc4j.provider.jena.JenaModelHelper;
+import com.magicdraw.oslc.resources.SysMLRequirement;
 
 public class OSLC_POST_req_to_MagicDraw {
 
 	public static void main(String[] args) {
 
-		
-		
 		try {
 			
 			SysMLRequirement newRequirementToAdd = new SysMLRequirement();
@@ -83,12 +61,6 @@ public class OSLC_POST_req_to_MagicDraw {
 			e.printStackTrace();
 
 		  }
-
-		
-		
-		
-		
-		
 
 	}
 

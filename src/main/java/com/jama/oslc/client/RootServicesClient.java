@@ -2,21 +2,15 @@ package com.jama.oslc.client;
 
 import java.io.InputStream;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.wink.client.ClientResponse;
 import org.eclipse.lyo.client.exception.ResourceNotFoundException;
 import org.eclipse.lyo.client.oslc.OSLCConstants;
 import org.eclipse.lyo.client.oslc.OslcClient;
-import org.eclipse.lyo.client.oslc.jazz.JazzRootServicesHelper;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.jama.oslc.model.Constants;
-import com.jama.oslc.web.AdapterInitializer;
-
-import org.eclipse.lyo.client.exception.RootServicesException;
 
 public class RootServicesClient {
 
