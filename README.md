@@ -73,7 +73,7 @@
 
 ### Getting Started ###
 
-Explore OSLC Jama resources by viewing them in HTML in your browser. Navigate through OSLC resources as described in the [OSLC Core Specification](http://open-services.net/bin/view/Main/OslcCoreSpecification) 
+Explore OSLC Jama resources by viewing them in HTML in your browser. Navigate through OSLC resources as described in the [OSLC Core Specification](https://archive.open-services.net/bin/view/Main/OslcCoreSpecification) 
 
 ![](https://archive.open-services.net/pub/Main/OSLCCoreSpecDRAFT/oslc-core-overview.png)
 
