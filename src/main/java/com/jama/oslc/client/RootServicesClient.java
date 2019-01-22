@@ -48,7 +48,7 @@ public class RootServicesClient {
 			OslcClient rootServicesClient = new OslcClient();
 			ClientResponse response = rootServicesClient.getResource(rootServicesUrl,OSLCConstants.CT_RDF);
 			InputStream is = response.getEntity(InputStream.class);
-			Model  rdfModel = ModelFactory.createDefaultModel();
+			Model rdfModel = ModelFactory.createDefaultModel();
 			rdfModel.read(is, rootServicesUrl);
 
 			//get the catalog URL
