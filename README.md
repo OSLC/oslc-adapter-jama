@@ -75,7 +75,7 @@
 
 Explore OSLC Jama resources by viewing them in HTML in your browser. Navigate through OSLC resources as described in the [OSLC Core Specification](http://open-services.net/bin/view/Main/OslcCoreSpecification) 
 
-![](http://open-services.net/pub/Main/OSLCCoreSpecDRAFT/oslc-core-overview.png)
+![](https://archive.open-services.net/pub/Main/OSLCCoreSpecDRAFT/oslc-core-overview.png)
 
 
 **If OAuth is enabled**, access the rootservices resource at [http://localhost:8080/jama-oslc-adapter/services/rootservices](http://localhost:8080/jama-oslc-adapter/services/rootservices). If using your browser, you will download a file named *rootservices.rdf*. This document will show the *ServiceProviderCatalog URL*, *oauthRequestTokenUrl*, *oauthUserAuthorizationUrl*, and *oauthAccessTokenUrl*, as shown below. 
